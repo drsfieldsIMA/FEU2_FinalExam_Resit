@@ -31,8 +31,6 @@ type CardArticleParams = {
 const NewsCard = ({ article }: { article: CardArticleParams }) => {
 	const cardArticle: CardArticleParams = article;
 
-	console.log("article News Cards==>", article);
-
 	return (
 		<Card
 			className={`news-card`}
@@ -57,7 +55,7 @@ const NewsCard = ({ article }: { article: CardArticleParams }) => {
 									color='text.primary'
 									className='std-size__font'
 									fontFamily='protipo, sans-serif'>
-									{10 / 01 / 1986}
+									{10 / 0o1 / 1986}
 								</Typography>
 							</Grid>
 							<Grid key={2} item xs={6} sm={6} md={3}>

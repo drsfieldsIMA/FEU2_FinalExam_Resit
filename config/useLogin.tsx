@@ -1,9 +1,9 @@
 /** @format */
 
 export const useLogin = async () => {
-	const regObj = localStorage.getItem("registration");
-	const regObjParse = JSON.parse(regObj);
+	const regObj: object | any = localStorage.getItem("registration");
+	const regObjParse: object | any = JSON.parse(regObj);
 	return {
-		username: regObjParse.secondName,
+		username: regObjParse.userName,
 	};
 };

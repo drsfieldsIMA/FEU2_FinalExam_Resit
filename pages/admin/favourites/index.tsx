@@ -1,27 +1,53 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { TimeHTMLAttributes, useState } from "react";
 import Link from "next/link";
 import BoxList from "../../../components/lists/BoxList";
 
-class myFavourites extends React.Component {
-	componentDidMount() {
-		console.log("componentDidMount");
-	}
+type MyProps = {
+	articlesArray: Array<any>;
+	spliceLimit: number;
+	prevArray: Array<any>;
+};
+type MyState = {
+	articlesArray: Array<any>;
+	spliceLimit: number;
+	prevArray: Array<any>;
+};
 
-	constructor(props) {
+class myFavourites extends React.Component<MyProps, MyState> {
+	constructor(props: MyProps) {
 		super(props);
 		this.state = {
-			articlesArray: [
-				{ title: "game 1", article_content: "", id: "1" },
-				{ title: "game 2", article_content: "", id: "2" },
-			],
+			spliceLimit: 4,
+			articlesArray: [],
+			prevArray: [],
 		};
+	}
+
+	componentDidMount() {
+		const fetchGame = async () => {
+			const response = await fetch(
+				`https://mmo-games.p.rapidapi.com/latestnews`,
+				{
+					method: "GET",
+					headers: {
+						"x-rapidapi-host": "mmo-games.p.rapidapi.com",
+						"x-rapidapi-key":
+							"3b1497acf6msh9bc671c8b1eadf4p1062afjsnea62995b5794",
+					},
+				}
+			);
+			const articlesArray = await response.json();
+			this.setState({
+				articlesArray: articlesArray.splice(0, 4),
+			});
+		};
+		fetchGame();
 	}
 
 	componentDidUpdate() {
 		console.log("componentDidUpdate");
-		console.log("this.state==>", this.state.articlesArray);
 	}
 
 	componentDidCatch() {
@@ -45,12 +71,21 @@ class myFavourites extends React.Component {
 			const articlesArray = await response.json();
 			console.log("title", articlesArray);
 			const { title, article_content, id } = articlesArray;
-			console.log("article_content", article_content);
-
 			this.setState({
-				articlesArray,
+				prevArray: this.state.articlesArray,
+			});
+			console.log("limit==>", this.state.spliceLimit);
+			console.log(
+				"article_content",
+				articlesArray.splice(0, this.state.spliceLimit)
+			);
+			this.setState({
+				articlesArray: this.state.prevArray.concat(
+					articlesArray.splice(0, this.state.spliceLimit)
+				),
 			});
 		};
+
 		fetchUserEmail();
 	};
 
@@ -58,7 +93,7 @@ class myFavourites extends React.Component {
 		return (
 			<div>
 				<h1>A user</h1>
-				<ul>
+				<ul >
 					{this.state.articlesArray &&
 						this.state.articlesArray.map((article, index) => (
 							<BoxList key={article.id} article={article}></BoxList>

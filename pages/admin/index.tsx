@@ -4,25 +4,29 @@ import React from "react";
 import myFavouries from "./favourites";
 import Link from "next/link";
 import { userContext } from "../../hooks/userContext";
+import { boolean } from "yup";
 
-class DashboardPage extends React.Component {
-	constructor(props) {
+type MyProps = { prefferedcolor: string; favorite: boolean };
+type MyState = { prefferedcolor: string; favorite: boolean };
+
+class DashboardPage extends React.Component<MyProps, MyState> {
+	constructor(props: MyProps) {
 		super(props);
-		this.state = { prefferedcolor: "blue", favourite: false };
+		this.state = { prefferedcolor: "blue", favorite: false };
 	}
 	shouldComponentUpdate() {
 		return true;
 	}
 	changeColor = () => {
-		const adminProps: string | null = localStorage.getItem("registration");
-		const admin = JSON.parse(adminProps);
+		const adminProps: string | any = localStorage.getItem("registration");
+		const admin: object | any = JSON.parse(adminProps);
 		this.state.prefferedcolor == "blue"
 			? this.setState({ prefferedcolor: "red" })
 			: this.setState({ prefferedcolor: "blue" });
 	};
 
 	componentDidMount() {
-		const adminProps: string | null = localStorage.getItem("registration");
+		const adminProps: string | any = localStorage.getItem("registration");
 		console.log("adminProps", JSON.parse(adminProps));
 		if (adminProps) {
 			//here you can set your state if it is necessary

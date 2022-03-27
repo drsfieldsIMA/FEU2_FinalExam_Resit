@@ -65,7 +65,6 @@ export function Heading({ color, size, content }: any) {
 	return (
 		<div className='heading-block'>
 			<VariableHeading style={{ color }}>{content}</VariableHeading>
-			<p> [Powered by Positivity]</p>
 		</div>
 	);
 }

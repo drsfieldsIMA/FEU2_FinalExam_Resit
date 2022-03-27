@@ -23,8 +23,17 @@
 	font-weight: 700;
 }
 
+$breakpoint_xs: 360px;
+$breakpoint_sm: 768px;
+$breakpoint_md: 1024px;
+$breakpoint_lg: 1280px;
+$breakpoint_xl: 14400px;
+$breakpoint_xxl: 1600px;
+
 $primary_blue: #4b68bf;
+$secondary_blue: #1c2c5b;
 $light_blue: #b7e6f8;
+$grey: #f0f7ff !important;
 $dark_blue: #1a2040;
 $green: #20664c;
 $cream: #fbf9be;
@@ -33,8 +42,11 @@ $dark: #160f09;
 $dark_red: #280d04;
 $dark_tertiary: #1b2653;
 $red: #bf2604;
-$activegreen: #04ceb4;
+$active_green: #04ceb4;
 $primary_yellow: #fffc13;
+
+// Metrics
+$button-padding: 11px 25px 10px 25px;
 
 html,
 body {
@@ -45,7 +57,15 @@ body {
 	font-size: 12.5px;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(45deg, $cream, $gold);
+	background: $dark_blue !important;
+}
+
+.splash-body {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(45deg, $cream, $dark_blue, transparent);
 }
 
 main {
@@ -70,42 +90,144 @@ a {
 	width: 75% !important;
 	margin: 0 auto;
 }
+
+.tab-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap !important;
+	justify-content: space-between !important;
+	margin-bottom: 2rem;
+}
+
+.MyEmpty {
+	background-color: $active_green !important;
+	color: #b7e6f8 !important;
+}
+
+.MyFilled {
+	background-color: $red !important;
+	color: #b7e6f8 !important;
+}
+
+.tab-btn {
+	background-color: $light_blue;
+	color: $dark_blue !important;
+}
+
 .height-75 {
 	height: 75vh !important;
 	margin-bottom: 5vh;
 }
 
+.MuiGrid-root {
+	margin-left: 0 !important;
+}
+
+.MuiButtonBase-root {
+	margin-right: 0 !important;
+}
+
 .start-tab {
-	background-color: $gold !important;
+	color: $light_blue !important;
 	flex-grow: 1;
-	color: $dark_tertiary !important;
+	background-color: $dark_tertiary !important;
 }
 
 fieldset {
-	background-color: #aa824e !important;
+	background-color: #f0f7ff !important;
+	padding: 18px;
 }
 
 .registration-tab {
-	background-color: $dark_tertiary !important;
+	background-color: $dark !important;
 	flex-grow: 4;
 	color: $cream;
 }
 .login-tab {
-	background-color: $dark_red !important;
+	color: $dark_blue !important;
 	flex-grow: 4;
-	color: $cream;
+	background-color: #fbf9be;
 }
 .Mui-selected {
 	background-color: rgb(240, 247, 255) !important;
 	color: rgb(0, 114, 229) !important;
 }
-input {
+
+.input-container {
+	position: relative;
+	width: 80%;
+	margin: 0 auto;
+}
+
+input[type="text"],
+input[type="password"] {
+	min-width: 100% !important;
+	max-width: 100%;
+	border-radius: 3px;
+	display: block;
+	margin: 0 auto;
+	font-size: 14px;
+	background: $grey;
 	font-family: "protipo", sans-serif !important;
+	height: 50px;
+}
+
+.label {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	transition: 1s all;
+	font-size: 14px;
+}
+
+.label::after {
+	content: "";
+	position: absolute;
+	top: 45px;
+	left: 0;
+	width: 10%;
+	background: red;
+	height: 5px;
+	transition: 1s all;
+}
+
+.input:focus + .label::after {
+	width: 100%;
+	font-size: 10px !important;
+	transition: 1s all;
+}
+
+input:focus {
+	background: white !important;
+	outline: none !important;
+	border: 3px solid $active_green !important;
+}
+
+.payment-form__container {
+	display: block;
+	height: fit-content;
+	min-width: 300px;
+	max-width: 80%;
+	margin: 0 auto;
 }
 
 .card-h1 {
 	font-size: 1.4rem;
 	font-family: "Rubik";
+}
+
+.thumbnail-group {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.img-thumbnail {
+	background-size: cover;
+	width: 100px !important;
+	height: 100px !important;
+	margin-top: 20px;
 }
 
 .container-circular-progress {
@@ -120,20 +242,6 @@ input {
 	height: 147px !important;
 	width: 147px !important;
 	justify-content: space-around;
-}
-
-input[type="text"],
-input[type="password"] {
-	padding: 5px 12px;
-	min-width: 73% !important;
-	max-width: 75%;
-	height: 40px;
-	border: 1px solid #000080;
-	border-radius: 7px;
-	display: block;
-	margin: 0 auto;
-	font-size: 13.5px;
-	background: white;
 }
 
 .formInput {
@@ -231,6 +339,38 @@ caption {
 	color: $dark_tertiary;
 }
 
+.product-box {
+	height: fit-content;
+	max-width: 94%;
+	min-width: 600px;
+	margin: 0 auto !important;
+}
+
+.content-container {
+	columns: 2;
+	height: fit-content;
+	margin-right: 10px !important;
+}
+
+.category-link {
+	font-size: 16px;
+	color: $primary_blue;
+	text-decoration: underline;
+}
+
+.ratio-4-3 {
+	width: 100%;
+	position: relative;
+	// background: url() 50% 50% no-repeat;
+	background-size: cover;
+	background-clip: content-box;
+}
+.ratio-4-3:before {
+	display: block;
+	content: "";
+	padding-top: 75%;
+}
+
 header {
 	position: relative;
 	height: 100vh;
@@ -266,12 +406,27 @@ header .banner-text {
 	width: 100%;
 }
 
+.button-form__container {
+	display: block;
+	position: relative;
+	width: fit-content;
+	margin: 3rem auto;
+}
+.button-group__card {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 0 10px;
+}
+
 button {
-	background-color: #000080;
+	background-color: linear-gradient(#ff9f2f, #ff6026);
 	color: white;
 	font-size: 16px;
 	position: flex;
 	flex-direction: row;
+	padding: $button-padding;
+	border-radius: 4px;
 }
 
 .player-wrapper {
@@ -390,7 +545,7 @@ button {
 	list-style: none;
 }
 
-.toogle-nav {
+.toggle-nav {
 	display: flex;
 	position: relative;
 	right: 40px;
@@ -403,4 +558,26 @@ button {
 	background-color: white;
 	border-radius: 4px !important;
 	border: 2px solid $dark_blue !important;
+}
+
+@media screen and (max-width: $breakpoint_sm) {
+	.html,
+	body {
+		font-size: 12px;
+	}
+	.main-splash {
+		width: 100% !important;
+	}
+	.MuiTabPanel-root {
+		padding: 0;
+	}
+	.tab-context {
+		font-size: 12px !important;
+		width: 95% !important;
+		margin: 0 auto;
+	}
+
+	.content-container {
+		columns: 1;
+	}
 }

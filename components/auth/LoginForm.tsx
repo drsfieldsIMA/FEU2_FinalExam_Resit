@@ -20,6 +20,7 @@ import {
 	Typography,
 } from "@mui/material";
 import router from "next/router";
+import { duplicatedPassword } from "../clickHandlers/checkNumberOnCard";
 
 const schema = yup.object().shape({
 	username: yup.string().required("Please enter your email"),
@@ -28,23 +29,25 @@ const schema = yup.object().shape({
 
 function LoginForm() {
 	const [submitting, setSubmitting] = useState(false);
-	const [loginError, setLoginError] = useState(null);
+	const [isValid, setIsValid] = useState(false);
+	const [focusMessage, setMessage] = useState("");
+	const [isLoginValid, setIsLoginValid] = useState(false);
+	const [focusLoginMessage, setFocusMessage] = useState("");
 
 	const { register, handleSubmit } = useForm({
 		resolver: yupResolver(schema),
 	});
 
-	const registration = localStorage.getItem("registration");
-	console.log("registration", registration);
+	const registration: object | any = localStorage.getItem("registration");
+	if (!registration) {
+		setFocusMessage(
+			"You need to register before you can gain access to the web app"
+		);
+	}
 
-	const [isValid, setIsValid] = useState(false);
-	const [focusMessage, setMessage] = useState("");
-	const [loginisValid, setloginisValid] = useState(false);
-	const [focusLoginMessage, setFocusMessage] = useState("");
-	const [auth, setAuth] = useState("");
 	const nameRegex = /\S/;
 
-	const validateName = (event) => {
+	const validateName = (event: React.ChangeEvent<any>) => {
 		const name = event.target.value;
 		if (nameRegex.test(name) && name.length > 4) {
 			setIsValid(true);
@@ -60,7 +63,7 @@ function LoginForm() {
 
 	const passwordRegex = /\S/;
 
-	const validatePassword = (event) => {
+	const validatePassword = (event: React.ChangeEvent<any>) => {
 		const pass = event.target.value;
 		if (passwordRegex.test(pass) && pass.length > 2) {
 			setIsValidPassword(true);
@@ -73,18 +76,15 @@ function LoginForm() {
 		}
 	};
 
-	async function onSubmit(data) {
-		console.log("submit now on click");
-		console.log("registration", registration);
-		console.log("data", data);
+	async function onSubmit(data: object | any) {
 		const registrationArray = JSON.parse(registration);
 		setSubmitting(true);
-		setLoginError(null);
 		setIsValid(false);
 		try {
-			if (data.password == registrationArray.password) {
+			let check = duplicatedPassword(data, registrationArray);
+			if (check) {
 				setIsValid(true);
-				setloginisValid(true);
+				setIsLoginValid(true);
 				setFocusMessage("You will now log in in 2 seconds");
 				setMessage("");
 				setTimeout(() => {
@@ -123,7 +123,7 @@ function LoginForm() {
 				}}
 				maxWidth='sm'>
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<div className={`message ${loginisValid ? "success" : "error"}`}>
+					<div className={`message ${isLoginValid ? "success" : "error"}`}>
 						{focusLoginMessage}
 					</div>
 
@@ -148,9 +148,11 @@ function LoginForm() {
 							{focusMessagePassword}
 						</div>
 						<div></div>
-						<button type='submit' className='addMemory'>
-							Log in
-						</button>
+						<div className='button-form__container'>
+							<button type='submit' className='addMemory'>
+								Log in
+							</button>
+						</div>
 					</fieldset>
 				</form>
 			</Container>

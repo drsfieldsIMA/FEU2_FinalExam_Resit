@@ -17,10 +17,19 @@ import { Filter, LoginTwoTone, Tune } from "@mui/icons-material";
 import { PersonRounded, Pageview } from "@mui/icons-material";
 import useSWR, { SWRConfig } from "swr";
 import NextLink from "next/link";
+import { userContext, valueContext } from "../../hooks/userContext";
 import DropdownList from "../lists/DropdownList";
 
 const Header: any = () => {
-	let adminName: any = null;
+	const { user, setUser } = useContext(userContext);
+	useEffect(() => {
+		if (typeof window !== "undefined") {
+			const regObj: string | any = localStorage.getItem("registration");
+			const registrationArray = JSON.parse(regObj);
+			console.log("registration", registrationArray.userName);
+			setUser(registrationArray.userName);
+		}
+	}, []);
 
 	const [inputValue, setInputValue] = React.useState("");
 	const [searchTerm, setSearchTerm] = React.useState("");
@@ -67,13 +76,25 @@ const Header: any = () => {
 								</a>
 							</Link>
 						</li>
-						<Button
-							onClick={() => (setToggleMenu(false), router.push("/"))}
-							className='items login-btn'
-							component='a'
-							startIcon={<LoginTwoTone fontSize='small' />}></Button>
+						{user ? (
+							<>
+								<Button
+									className='items login-btn'
+									component='a'
+									startIcon={<LoginTwoTone fontSize='small' />}
+									onClick={() => {
+										// call logout
+										setUser(null), router.push("/");
+									}}>
+									{`${user} Logout`}
+								</Button>
+							</>
+						) : (
+							<button>Login</button>
+						)}
 					</ul>
 				)}
+
 				<IconButton
 					size='large'
 					edge='end'
@@ -94,6 +115,14 @@ const Header: any = () => {
 		</div>
 	);
 };
+
+export async function getStaticProps({ params }: { params: object | any }) {
+	console.log("Navigation Params", params);
+
+	return {
+		props: { params },
+	};
+}
 
 Header.propTypes = {
 	onSidebarOpen: PropTypes.func,

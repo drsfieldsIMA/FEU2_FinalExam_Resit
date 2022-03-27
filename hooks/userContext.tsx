@@ -2,5 +2,5 @@
 
 import React, { createContext } from "react";
 
-export const userContext = React.createContext(null);
-export const valueContext = React.createContext("1");
+export const userContext: object | any = React.createContext(null);
+export const valueContext: string | any = React.createContext("1");

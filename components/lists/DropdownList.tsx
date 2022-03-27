@@ -8,7 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 export default function DropdownList() {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const open = Boolean(anchorEl);
-	const handleClick = (event) => {
+	const handleClick = (event: React.ChangeEvent<any>) => {
 		setAnchorEl(event.currentTarget);
 	};
 	const handleClose = () => {

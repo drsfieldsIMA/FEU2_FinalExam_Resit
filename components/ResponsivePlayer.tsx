@@ -5,8 +5,8 @@ import { Component } from "react";
 import { CircularProgress } from "@mui/material";
 import Box from "@mui/material/Box";
 
-class ResponsivePlayer extends Component {
-	constructor(props) {
+class ResponsivePlayer extends Component<any, any> {
+	constructor(props: any) {
 		super(props);
 		this.state = { isLoadingVideo: true };
 	}
@@ -19,7 +19,7 @@ class ResponsivePlayer extends Component {
 
 	render() {
 		return (
-			<main>
+			<main className='main-splash'>
 				{this.state.isLoadingVideo ? (
 					<div className='circular-progress-wrapper'>
 						<Box className='container-circular-progress'>

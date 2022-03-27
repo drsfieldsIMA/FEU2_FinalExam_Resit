@@ -1,7 +1,7 @@
 /** @format */
 
 import type { NextPage } from "next";
-import React from "react";
+import React, { FC } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.scss";
@@ -24,44 +24,61 @@ import nookies from "nookies";
 import { Password } from "@mui/icons-material";
 import TabContext, { useTabContext } from "@mui/lab/TabContext";
 import { valueContext } from "../../hooks/userContext";
+import { checkEmailString } from "../clickHandlers/checkEmailString";
+
+export interface MyTabContextValue {
+	valueTab: string;
+	setValueTab: FC<String>;
+}
 
 const API_URL = "https://level-up-strapi.herokuapp.com";
 
 const schema = yup.object().shape({
-	firstName: yup.string().required("Please enter your first name"),
-	secondName: yup.string().required("Please enter your first name"),
-	userName: yup.string().required("Please enter your email"),
+	userName: yup.string().required("Please enter your first name"),
+	email: yup.string().required("Please enter your first name"),
 	password: yup.string().required("Please enter your password"),
 	password_2: yup.string().required("Please enter your password"),
 });
 
 function RegistrationForm() {
-	const { valueTab, setValueTab } = useContext(valueContext);
+	const { valueTab, setValueTab }: MyTabContextValue = useContext(valueContext);
 
 	const [submitting, setSubmitting] = useState(false);
 	const [loginError, setLoginError] = useState(null);
+
+	const [isValid, setIsValid] = useState(false);
+	const [focusMessage, setMessage] = useState("");
+	const [IsLogInValid, setIsLogInValid] = useState(false);
+	const [focusLoginMessage, setFocusMessage] = useState("");
+	const [focusMessageEmail, setFocusMessageEmail] = useState("");
+	const [IsValidEmail, setIsValidEmail] = useState(false);
+	const [IsValidPassword, setIsValidPassword] = useState(false);
+	const [email, setEmail] = useState("");
+	const [focusMessagePassword, setFocusMessagePassword] = useState("");
+
+	const passwordRegex = /\S/;
+
+	const [IsValidDuplicatePassword, setIsValidDuplicatePassword] =
+		useState(false);
+	const [focusMessageDuplicatePassword, setMessageDuplicatePassword] =
+		useState("");
+
+	const nameRegex = /\S/;
+
+	const [data, setData]: object | any = useState({});
+	const [password_1, setPassword_1] = useState("");
 
 	const { register, handleSubmit } = useForm({
 		resolver: yupResolver(schema),
 	});
 
-	const [data, setData] = useState({});
-	const [password_1, setPassword_1] = useState("");
-
-	const handleChange = (e) => {
-		const newData = { ...data };
+	const handleChange = (e: React.ChangeEvent<any>) => {
+		const newData: Array<any> | any = { ...data };
 		newData[e.target.name] = e.target.value;
 		setData(newData);
 	};
 
-	const [isValid, setIsValid] = useState(false);
-	const [focusMessage, setMessage] = useState("");
-	const [loginisValid, setloginisValid] = useState(false);
-	const [focusLoginMessage, setFocusMessage] = useState("");
-	const [auth, setAuth] = useState("");
-	const nameRegex = /\S/;
-
-	const validateName = (event) => {
+	const validateName = (event: React.ChangeEvent<any>) => {
 		const name = event.target.value;
 		if (nameRegex.test(name) && name.length > 4) {
 			setIsValid(true);
@@ -72,12 +89,7 @@ function RegistrationForm() {
 		}
 	};
 
-	const [isValidPassword, setIsValidPassword] = useState(false);
-	const [focusMessagePassword, setFocusMessagePassword] = useState("");
-
-	const passwordRegex = /\S/;
-
-	const validatePassword = (event) => {
+	const validatePassword = (event: React.ChangeEvent<any>) => {
 		const pass = event.target.value;
 		if (passwordRegex.test(pass) && pass.length > 2) {
 			setIsValidPassword(true);
@@ -91,31 +103,48 @@ function RegistrationForm() {
 		}
 	};
 
-	const validateRepeatedPassword = (event) => {
+	const validateRepeatedPassword = (event: React.ChangeEvent<any>) => {
 		const repeatedPass = event.target.value;
 		if (repeatedPass === password_1) {
-			setIsValidPassword(true);
-			setFocusMessagePassword("Your passwords match!");
-			const newData = { ...data };
+			setIsValidDuplicatePassword(true);
+			setMessageDuplicatePassword("Your passwords match!");
+			const newData: Array<any> | any = { ...data };
 			newData["password"] = repeatedPass;
 			setData(newData);
 			console.log("handleChange", data);
 		} else {
-			setIsValidPassword(false);
-			setFocusMessagePassword("Please re-enter your chosen password");
+			setIsValidDuplicatePassword(false);
+			setMessageDuplicatePassword("Please re-enter your chosen password");
+		}
+	};
+	const emailRegex =
+		/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+	const validateEmail = (event: React.ChangeEvent<any>) => {
+		console.log("check Email==>", event.target.value);
+		const userEmail = event.target.value;
+		let checkEmail = checkEmailString(userEmail, emailRegex);
+		console.log("check Email==>", checkEmail);
+		if (checkEmail) {
+			setIsValidEmail(true);
+			setFocusMessageEmail("Your email looks good");
+			setEmail(userEmail);
+		} else {
+			setIsValidEmail(false);
+			setFocusMessageEmail("Please enter a email with more than 2 characters!");
 		}
 	};
 
 	async function setFormData() {
-		localStorage.setItem("registration", JSON.stringify(data));
 		setValueTab("3");
 	}
 
-	async function onSubmit(data) {
+	async function onSubmit(data: object | any) {
 		setSubmitting(true);
 		setLoginError(null);
 		setIsValid(false);
-		const loginInfo = {
+		setIsLogInValid(false);
+		const loginInfo: object | any = {
 			identifier: data.username,
 			password: data.password,
 		};
@@ -123,13 +152,12 @@ function RegistrationForm() {
 		try {
 			if (isValid && isValidPassword) {
 				setIsValid(true);
-				setloginisValid(true);
+				setIsLogInValid(true);
 				setFocusMessage("You will now log in in 2 seconds");
 				setMessage("");
-				localStorage.setItem("auth", JSON.stringify(loginResponse));
 			} else {
 				let errorText =
-					`backend error message is   ${login.statusText} & ${login.status} \n` +
+					`backend error message is   ${loginInfo} \n` +
 					`check your credentials are correct `;
 				setFocusMessage(errorText); // It's an Error instance.
 			}
@@ -141,6 +169,7 @@ function RegistrationForm() {
 			}
 		} finally {
 			setSubmitting(false);
+			//	setValueTab("3");
 		}
 	}
 
@@ -160,31 +189,46 @@ function RegistrationForm() {
 				}}
 				maxWidth='sm'>
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<div className={`message ${loginisValid ? "success" : "error"}`}>
-						{focusLoginMessage}
+					<div className={`message ${isValid ? "success" : "error"}`}>
+						{focusMessage}
 					</div>
 					<fieldset disabled={submitting}>
 						<Grid container spacing={2} px={2} marginLeft={0}>
 							<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-								<label htmlFor='firstName'>First Name</label>
-								<input
-									type='text'
-									placeholder='Jane, Ronny, Charlie'
-									{...register("firstName")}
-									value={data.firstName}
-									onChange={handleChange}></input>
+								<div className='input-container'>
+									<input
+										type='text'
+										{...register("userName")}
+										value={data.userName}
+										onChange={(handleChange, validateName)}
+										className='input'></input>
+									<label className='label' htmlFor='userName'>
+										First Name
+									</label>
+								</div>
 								<div></div>
+								<div className={`message ${isValid ? "success" : "error"}`}>
+									{focusMessage}
+								</div>
 							</Grid>
 							<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-								<label htmlFor='secondName'>Second Name</label>
-								<input
-									type='text'
-									placeholder='Doe, Atkinson, Murphy'
-									{...register("secondName")}
-									value={data.secondName}
-									name='secondName'
-									onChange={handleChange}></input>
+								<div className='input-container'>
+									<input
+										type='text'
+										{...register("email")}
+										value={data.userEmail}
+										className='input'
+										name='email'
+										onChange={validateEmail}></input>
+									<label className='label' htmlFor='email'>
+										Email
+									</label>
+								</div>
 								<div></div>
+								<div
+									className={`message ${IsValidEmail ? "success" : "error"}`}>
+									{focusMessageEmail}
+								</div>
 							</Grid>
 							<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
 								<label htmlFor='password_1'>Password</label>
@@ -198,7 +242,7 @@ function RegistrationForm() {
 								/>
 								<div
 									className={`message ${
-										isValidPassword ? "success" : "error"
+										IsValidPassword ? "success" : "error"
 									}`}>
 									{focusMessagePassword}
 								</div>
@@ -215,19 +259,21 @@ function RegistrationForm() {
 								/>
 								<div
 									className={`message ${
-										isValidPassword ? "success" : "error"
+										IsValidDuplicatePassword ? "success" : "error"
 									}`}>
-									{focusMessagePassword}
+									{focusMessageDuplicatePassword}
 								</div>
 								<div></div>
 							</Grid>
 						</Grid>
-						<button
-							type='submit'
-							className='addMemory'
-							onClick={() => setFormData()}>
-							Add Data
-						</button>
+						<div className='button-form__container'>
+							<button
+								type='submit'
+								className='addMemory'
+								onClick={() => setFormData()}>
+								Add Data
+							</button>
+						</div>
 					</fieldset>
 				</form>
 			</Container>
