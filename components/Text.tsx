@@ -4,9 +4,14 @@ import PropTypes from "prop-types";
 
 function Text({
 	color,
-	size = "14",
-	fontFamily = "Fira Sans Condensed",
+	size,
+	fontFamily,
 	content,
+}: {
+	color: string;
+	size: string;
+	fontFamily: string;
+	content: string;
 }) {
 	return <p style={{ color, size, fontFamily }}>{content}</p>;
 }

@@ -72,9 +72,9 @@ function Cart({ gameArray }: { gameArray: Array<any> | any }) {
 								<BoxList key={item.id} article={item}></BoxList>
 								<Button
 									variant='outlined'
-									onClick={(e) => (
+									onClick={() => (
 										deleteCartGameTop(news, item.id),
-										setRenderCount((prevState) => prevState + 1)
+										setRenderCount((prevState: number) => prevState + 1)
 									)}>
 									Buy
 								</Button>
