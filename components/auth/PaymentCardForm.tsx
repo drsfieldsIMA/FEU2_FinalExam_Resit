@@ -148,9 +148,9 @@ function PaymentCardForm() {
 							placeholder='Jane, Ronny, Charlie'
 							{...register("Name")}
 							value={data.Name}
-							onChange={
-								((e: React.ChangeEvent<any>) => handleChange(e), validateName)
-							}></input>
+							onChange={(e: React.ChangeEvent<any>) => {
+								handleChange(e), validateName;
+							}}></input>
 						<div></div>
 						<div className={`message ${isValidNumber ? "success" : "error"}`}>
 							{focusMessage}

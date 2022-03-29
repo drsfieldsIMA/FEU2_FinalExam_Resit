@@ -150,7 +150,7 @@ function RegistrationForm() {
 		};
 
 		try {
-			if (isValid && isValidPassword) {
+			if (isValid && IsValidPassword) {
 				setIsValid(true);
 				setIsLogInValid(true);
 				setFocusMessage("You will now log in in 2 seconds");
@@ -200,7 +200,9 @@ function RegistrationForm() {
 										type='text'
 										{...register("userName")}
 										value={data.userName}
-										onChange={(handleChange, validateName)}
+										onChange={(e: React.ChangeEvent<any>) => {
+											handleChange(e), validateName;
+										}}
 										className='input'></input>
 									<label className='label' htmlFor='userName'>
 										First Name

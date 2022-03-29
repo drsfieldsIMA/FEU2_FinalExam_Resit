@@ -9,18 +9,15 @@ function Text({
 	content,
 }: {
 	color: string;
-	size: string;
+	size: string | any;
 	fontFamily: string;
 	content: string;
 }) {
-	return <p style={{ color, size, fontFamily }}>{content}</p>;
+	return (
+		<p style={{ color: color, fontSize: size, fontFamily: fontFamily }}>
+			{content}
+		</p>
+	);
 }
-
-Text.propTypes = {
-	size: PropTypes.string,
-	fontFamily: PropTypes.string,
-	color: PropTypes.string,
-	content: PropTypes.string.isRequired,
-};
 
 export default Text;

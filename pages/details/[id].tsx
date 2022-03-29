@@ -1,5 +1,5 @@
 /** @format */
-import React from "react";
+import React, { useState, useEffect, FC } from "react";
 import PropTypes from "prop-types";
 import { Card, Box, Divider, CircularProgress } from "@mui/material";
 //import { API_URL } from "../utils/url";
@@ -9,11 +9,11 @@ import SingleArticlePage from "../../components/lists/Cards/SingleArticlePage";
 import Text from "../../components/Text";
 import Link from "next/link";
 
-export default function productPost({ asset }) {
+export default function ProductPost({ asset }: { asset: Array<object> | any }) {
 	console.log("game asset scoped==>", asset);
-	const [isLoading, setIsLoading] = React.useState(true);
+	const [isLoading, setIsLoading] = useState(true);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (asset) {
 			//	const { title, main_image, article_content, category } = asset;
 			var content = asset?.description?.replace(/<img[^>]*>/, "");
@@ -48,7 +48,7 @@ export default function productPost({ asset }) {
 									}}></div>
 								<div className='thumbnail-group'>
 									{asset.screenshots
-										? asset.screenshots.map((item) => (
+										? asset.screenshots.map((item: object | any) => (
 												<div
 													key={item.id}
 													className='content-container img-thumbnail'
@@ -82,8 +82,16 @@ export default function productPost({ asset }) {
 									color='#e52d27'
 									dangerouslySetInnerHTML={{ __html: `${asset.description}` }}
 								/>
-								<Text color={"#00035a"} content={asset.id}></Text>
-								<Text color={"#00035a"} content={asset.createdAt}></Text>
+								<Text
+									fontFamily={"demos-next"}
+									size='12px'
+									color={"#00035a"}
+									content={asset.id}></Text>
+								<Text
+									fontFamily={"demos-next"}
+									size='12px'
+									color={"#00035a"}
+									content={asset.createdAt}></Text>
 							</Grid>
 						</Grid>
 					</Card>

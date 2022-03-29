@@ -87,7 +87,7 @@ function browsePage({ gameArray }: { gameArray: Array<any> | null }) {
 
 	useEffect(() => {
 		// component is mounted and window is available
-		if (gameArray?.length > 0) {
+		if (gameArray!.length > 0) {
 			return setIsLoading(false);
 		} else {
 			return setIsLoading(true);
@@ -194,7 +194,8 @@ export async function getServerSideProps() {
 		},
 	});
 	const gameArrayFull = await response.json();
-	const gameArray = gameArrayFull.slice(0, 40);
+	let gameArray = [];
+	gameArray = gameArrayFull.slice(0, 40);
 	return {
 		props: { gameArray },
 	};

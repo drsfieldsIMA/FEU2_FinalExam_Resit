@@ -11,6 +11,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap");
 
 @font-face {
+	font-family: "hermes";
+	src: url("./fonts/Hermes-Regular.otf") format("opentype");
+}
+
+@font-face {
 	font-family: "demos-next";
 	src: url("https://use.typekit.net/af/7a4f71/00000000000000007735bbed/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3")
 			format("woff2"),
@@ -58,6 +63,14 @@ body {
 	width: 100%;
 	height: 100%;
 	background: $dark_blue !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-family: "hermes";
 }
 
 .splash-body {
@@ -214,7 +227,7 @@ input:focus {
 
 .card-h1 {
 	font-size: 1.4rem;
-	font-family: "Rubik";
+	font-family: "hermes";
 }
 
 .thumbnail-group {

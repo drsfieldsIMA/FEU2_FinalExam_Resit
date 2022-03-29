@@ -29,7 +29,7 @@ const Header: any = () => {
 			console.log("registration", registrationArray.userName);
 			setUser(registrationArray.userName);
 		}
-	}, []);
+	}, [setUser]);
 
 	const [inputValue, setInputValue] = React.useState("");
 	const [searchTerm, setSearchTerm] = React.useState("");
@@ -117,7 +117,7 @@ const Header: any = () => {
 };
 
 export async function getStaticProps({ params }: { params: object | any }) {
-	console.log("Navigation Params", params);
+	console.log("Navigation Params==>", params);
 
 	return {
 		props: { params },
