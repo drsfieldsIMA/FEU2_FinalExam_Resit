@@ -4,6 +4,7 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 export default function DropdownList() {
 	const [anchorEl, setAnchorEl] = React.useState(null);
@@ -18,10 +19,12 @@ export default function DropdownList() {
 	return (
 		<>
 			<Button
+				startIcon={<ArrowDropDownIcon />}
 				id='basic-button'
 				aria-controls={open ? "basic-menu" : undefined}
 				aria-haspopup='true'
 				aria-expanded={open ? "true" : undefined}
+				className={"drop-down"}
 				onClick={handleClick}>
 				Genres
 			</Button>

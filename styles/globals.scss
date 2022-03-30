@@ -1,13 +1,5 @@
 /** @format */
 
-/** @format */
-@font-face {
-	font-family: "protipo", sans-serif;
-	src: url("https://use.typekit.net/yri7fbm.css");
-	font-weight: 300;
-	font-style: normal;
-}
-
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap");
 
 @font-face {
@@ -96,6 +88,23 @@ a {
 	box-sizing: border-box;
 }
 
+button {
+	background: linear-gradient(
+		180deg,
+		#1c2956,
+		#1c3061,
+		#1b457b,
+		#186297,
+		#1672a4
+	);
+	color: white;
+	font-size: 16px;
+	position: flex;
+	flex-direction: row;
+	padding: $button-padding;
+	border-radius: 4px;
+}
+
 .tab-context {
 	background-color: $primary_blue;
 	color: $cream !important;
@@ -138,8 +147,14 @@ a {
 
 .MuiButtonBase-root {
 	margin-right: 0 !important;
+	border-radius: 3px;
 }
 
+@media (min-width: 980px) {
+	.toggle-nav {
+		display: none;
+	}
+}
 .start-tab {
 	color: $light_blue !important;
 	flex-grow: 1;
@@ -151,6 +166,15 @@ fieldset {
 	padding: 18px;
 }
 
+.logo {
+	background-image: url("../public/BB_logo_3.svg");
+	height: 80px;
+	width: 80px;
+}
+
+.drop-down {
+	background: white !important;
+}
 .registration-tab {
 	background-color: $dark !important;
 	flex-grow: 4;
@@ -181,7 +205,7 @@ input[type="password"] {
 	margin: 0 auto;
 	font-size: 14px;
 	background: $grey;
-	font-family: "protipo", sans-serif !important;
+	font-family: "demos-next";
 	height: 50px;
 }
 
@@ -200,15 +224,56 @@ input[type="password"] {
 	top: 45px;
 	left: 0;
 	width: 10%;
-	background: red;
+	background: $red;
 	height: 5px;
 	transition: 1s all;
+}
+
+.disabled {
+	background: $dark_blue !important;
+	opacity: 0.7 !important;
+	color: #1672a4;
+	pointer-events: none;
+	cursor: default;
+}
+
+.flex-box__container {
+	display: block;
+	width: 70%;
+	margin: 0 auto;
+}
+.flex-box {
+	display: inline-flex;
+	justify-content: space-around;
+	width: 100% !important;
+	margin: 1rem 0;
+}
+/* PROGRESS BAR */
+.progressbar {
+	width: 400px;
+	height: 15px;
+	background-color: white;
+	margin: 2rem auto !important;
+}
+
+.progressbar div {
+	width: 33.3%;
+	height: 100%;
+	background-color: $primary_blue !important;
 }
 
 .input:focus + .label::after {
 	width: 100%;
 	font-size: 10px !important;
 	transition: 1s all;
+	background: $active_green;
+}
+
+.input:focus + .label-valid::after {
+	width: 100%;
+	font-size: 10px !important;
+	transition: 1s all;
+	background: $red !important;
 }
 
 input:focus {
@@ -430,16 +495,6 @@ header .banner-text {
 	flex-direction: row;
 	justify-content: space-between;
 	padding: 0 10px;
-}
-
-button {
-	background-color: linear-gradient(#ff9f2f, #ff6026);
-	color: white;
-	font-size: 16px;
-	position: flex;
-	flex-direction: row;
-	padding: $button-padding;
-	border-radius: 4px;
 }
 
 .player-wrapper {

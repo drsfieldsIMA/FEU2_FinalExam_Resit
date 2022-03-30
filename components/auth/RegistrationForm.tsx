@@ -1,7 +1,7 @@
 /** @format */
 
 import type { NextPage } from "next";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.scss";
@@ -40,13 +40,18 @@ const schema = yup.object().shape({
 	password_2: yup.string().required("Please enter your password"),
 });
 
-function RegistrationForm() {
-	const { valueTab, setValueTab }: MyTabContextValue = useContext(valueContext);
-
+function RegistrationForm({
+	page,
+	setPage,
+}: {
+	page: number;
+	setPage: React.Dispatch<React.SetStateAction<number>>;
+}) {
+	const [renderCount, setRenderCount] = useState(0);
 	const [submitting, setSubmitting] = useState(false);
 	const [loginError, setLoginError] = useState(null);
 
-	const [isValid, setIsValid] = useState(false);
+	const [IsValid, setIsValid] = useState(false);
 	const [focusMessage, setMessage] = useState("");
 	const [IsLogInValid, setIsLogInValid] = useState(false);
 	const [focusLoginMessage, setFocusMessage] = useState("");
@@ -80,9 +85,13 @@ function RegistrationForm() {
 
 	const validateName = (event: React.ChangeEvent<any>) => {
 		const name = event.target.value;
+		console.log("name==>", name);
 		if (nameRegex.test(name) && name.length > 4) {
 			setIsValid(true);
 			setMessage("Your Name looks good");
+			const newData: Array<any> | any = { ...data };
+			newData[event.target.name] = event.target.value;
+			setData(newData);
 		} else {
 			setIsValid(false);
 			setMessage("Please enter a name with more than 3 characters!");
@@ -95,6 +104,9 @@ function RegistrationForm() {
 			setIsValidPassword(true);
 			setFocusMessagePassword("Your password looks good");
 			setPassword_1(pass);
+			const newData: Array<any> | any = { ...data };
+			newData[event.target.name] = event.target.value;
+			setData(newData);
 		} else {
 			setIsValidPassword(false);
 			setFocusMessagePassword(
@@ -129,35 +141,37 @@ function RegistrationForm() {
 			setIsValidEmail(true);
 			setFocusMessageEmail("Your email looks good");
 			setEmail(userEmail);
+			const newData: Array<any> | any = { ...data };
+			newData[event.target.name] = event.target.value;
+			setData(newData);
 		} else {
 			setIsValidEmail(false);
 			setFocusMessageEmail("Please enter a email with more than 2 characters!");
 		}
 	};
 
-	async function setFormData() {
-		setValueTab("3");
-	}
-
-	async function onSubmit(data: object | any) {
+	async function setFormData(
+		event: React.ChangeEvent<any>,
+		data: object | any
+	) {
+		event.preventDefault();
 		setSubmitting(true);
 		setLoginError(null);
 		setIsValid(false);
 		setIsLogInValid(false);
-		const loginInfo: object | any = {
-			identifier: data.username,
-			password: data.password,
-		};
-
 		try {
-			if (isValid && IsValidPassword) {
+			if (IsValidPassword) {
 				setIsValid(true);
 				setIsLogInValid(true);
+				if (typeof window !== "undefined") {
+					localStorage.setItem("registration", JSON.stringify(data));
+				}
 				setFocusMessage("You will now log in in 2 seconds");
 				setMessage("");
+				setPage(3);
 			} else {
 				let errorText =
-					`backend error message is   ${loginInfo} \n` +
+					`backend error message is  \n` +
 					`check your credentials are correct `;
 				setFocusMessage(errorText); // It's an Error instance.
 			}
@@ -169,7 +183,7 @@ function RegistrationForm() {
 			}
 		} finally {
 			setSubmitting(false);
-			//	setValueTab("3");
+			//		setValueTab("3");
 		}
 	}
 
@@ -188,8 +202,8 @@ function RegistrationForm() {
 					backgroundColor: "transparent",
 				}}
 				maxWidth='sm'>
-				<form onSubmit={handleSubmit(onSubmit)}>
-					<div className={`message ${isValid ? "success" : "error"}`}>
+				<form>
+					<div className={`message ${IsValid ? "success" : "error"}`}>
 						{focusMessage}
 					</div>
 					<fieldset disabled={submitting}>
@@ -201,7 +215,7 @@ function RegistrationForm() {
 										{...register("userName")}
 										value={data.userName}
 										onChange={(e: React.ChangeEvent<any>) => {
-											handleChange(e), validateName;
+											validateName(e);
 										}}
 										className='input'></input>
 									<label className='label' htmlFor='userName'>
@@ -209,7 +223,7 @@ function RegistrationForm() {
 									</label>
 								</div>
 								<div></div>
-								<div className={`message ${isValid ? "success" : "error"}`}>
+								<div className={`message ${IsValid ? "success" : "error"}`}>
 									{focusMessage}
 								</div>
 							</Grid>
@@ -232,16 +246,20 @@ function RegistrationForm() {
 									{focusMessageEmail}
 								</div>
 							</Grid>
-							<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-								<label htmlFor='password_1'>Password</label>
-								<input
-									placeholder='password'
-									{...register("password_1")}
-									onChange={validatePassword}
-									type='password'
-									name='password_1'
-									value={data.password_1}
-								/>
+							<Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
+								<div className='input-container'>
+									<input
+										{...register("password_1")}
+										onChange={validatePassword}
+										type='password'
+										name='password_1'
+										value={data.password_1}
+										className='input'
+									/>
+									<label className='label' htmlFor='password_1'>
+										Password
+									</label>
+								</div>
 								<div
 									className={`message ${
 										IsValidPassword ? "success" : "error"
@@ -250,15 +268,19 @@ function RegistrationForm() {
 								</div>
 								<div></div>
 							</Grid>
-							<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-								<label htmlFor='password_2'>Re-enter Password</label>
-								<input
-									placeholder=' please repeat your password'
-									{...register("password_2")}
-									onChange={validateRepeatedPassword}
-									name={data.password_2}
-									type='password'
-								/>
+							<Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
+								<div className='input-container'>
+									<input
+										{...register("password_2")}
+										onChange={validateRepeatedPassword}
+										name={data.password_2}
+										type='password'
+										className='input'
+									/>
+									<label className='label' htmlFor='password_2'>
+										Re-enter Password
+									</label>
+								</div>
 								<div
 									className={`message ${
 										IsValidDuplicatePassword ? "success" : "error"
@@ -272,8 +294,14 @@ function RegistrationForm() {
 							<button
 								type='submit'
 								className='addMemory'
-								onClick={() => setFormData()}>
-								Add Data
+								onClick={(event) => setFormData(event, data)}>
+								Register Details
+							</button>
+							<button
+								onClick={() => {
+									setPage((currPage) => currPage - 1);
+								}}>
+								Prev
 							</button>
 						</div>
 					</fieldset>
