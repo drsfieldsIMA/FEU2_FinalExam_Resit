@@ -52,6 +52,7 @@ function HomeForm(props: IMyValue) {
 	const [IsValid, setIsValid] = useState(false);
 	const [focusMessage, setMessage] = useState("");
 	const [data, setData]: object | any = useState({});
+	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 	const [IsValidPassword, setIsValidPassword] = useState(false);
 	const [isLoginValid, setIsLoginValid] = useState(false);
@@ -158,7 +159,7 @@ function HomeForm(props: IMyValue) {
 									value={data.userName}
 									onChange={validateName}
 									className='input'></input>
-								<label className='label' htmlFor='username'>
+								<label className='label' htmlFor='userName'>
 									Username / Email
 								</label>
 							</div>
