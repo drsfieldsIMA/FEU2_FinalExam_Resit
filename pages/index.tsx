@@ -150,7 +150,7 @@ function HomeForm(props: IMyValue) {
 		} else {
 			return (
 				<fieldset>
-					<Grid container spacing={2} px={2} marginLeft={0}>
+					{/* 	<Grid container spacing={2} px={2} marginLeft={0}>
 						<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
 							<div className='input-container'>
 								<input
@@ -217,7 +217,7 @@ function HomeForm(props: IMyValue) {
 								Reset
 							</button>
 						</div>
-					</Grid>
+					</Grid> */}
 				</fieldset>
 			);
 		}
