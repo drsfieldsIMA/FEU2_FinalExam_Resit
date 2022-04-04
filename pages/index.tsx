@@ -156,7 +156,6 @@ function HomeForm(props: IMyValue) {
 								<input
 									type='text'
 									{...register("userName")}
-									value={data.userName}
 									onChange={validateName}
 									className='input'></input>
 								<label className='label' htmlFor='userName'>
@@ -175,7 +174,6 @@ function HomeForm(props: IMyValue) {
 									{...register("password")}
 									onChange={validatePassword}
 									type='password'
-									value={data.password}
 									className='input'
 								/>
 								<label className='label' htmlFor='password'>
