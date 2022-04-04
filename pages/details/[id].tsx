@@ -148,6 +148,7 @@ export async function getStaticProps({ params }: { params: object | any }) {
 	);
 
 	if (response.status === 200) {
+		console.log("response", response);
 		game = await response.json();
 	}
 
