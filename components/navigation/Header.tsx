@@ -19,6 +19,7 @@ import useSWR, { SWRConfig } from "swr";
 import NextLink from "next/link";
 import { userContext, valueContext } from "../../hooks/userContext";
 import DropdownList from "../lists/DropdownList";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const Header: any = () => {
 	const { user, setUser } = useContext(userContext);
@@ -49,70 +50,75 @@ const Header: any = () => {
 	};
 
 	return (
-		<div>
-			<nav className='header'>
-				<Link href='/'>
-					<a className='logo-link' onClick={() => toggleLogo()}>
-						<div className='logo'></div>
-					</a>
-				</Link>
+		<nav className='header'>
+			<Link href='/'>
+				<a className='logo-link' onClick={() => toggleLogo()}>
+					<div className='logo'></div>
+				</a>
+			</Link>
 
-				{(toggleMenu || width > 768) && (
-					<ul className='list'>
-						<li className='items'>
-							<DropdownList></DropdownList>
-						</li>
-						<li className='items'>
-							<Link href='/cart'>
-								<a className='items__link' onClick={() => toggleNav()}>
-									Cart
-								</a>
-							</Link>
-						</li>
-						<li className='items'>
-							<Link href='/checkout'>
-								<a className='items__link' onClick={() => toggleNav()}>
-									Check-out
-								</a>
-							</Link>
-						</li>
-						{user ? (
-							<>
-								<Button
-									className='items login-btn'
-									component='a'
-									startIcon={<LoginTwoTone fontSize='small' />}
-									onClick={() => {
-										// call logout
-										setUser(null), router.push("/");
-									}}>
-									{`${user} Logout`}
-								</Button>
-							</>
-						) : (
-							<button>Login</button>
-						)}
-					</ul>
-				)}
+			{(toggleMenu || width > 768) && (
+				<ul className='list'>
+					<li className='items'>
+						<Link href='/browse'>
+							<div className='nav-genre-item'></div>
+						</Link>
+						<DropdownList></DropdownList>
+					</li>
+					<li className='items'>
+						<Link href='/cart'>
+							<div className='nav-cart-item'></div>
+						</Link>
+						<Link href='/cart'>
+							<a className='items__link' onClick={() => toggleNav()}>
+								Cart
+							</a>
+						</Link>
+					</li>
+					<li className='items'>
+						<div className='nav-card-item'></div>
+						<Link href='/checkout'>
+							<a className='items__link' onClick={() => toggleNav()}>
+								Check-out
+							</a>
+						</Link>
+					</li>
+					{user ? (
+						<>
+							<Button
+								className='items login-btn'
+								component='a'
+								startIcon={<LoginTwoTone fontSize='small' />}
+								onClick={() => {
+									// call logout
+									setUser(null), router.push("/");
+								}}>
+								{`${user} Logout`}
+							</Button>
+						</>
+					) : (
+						<button>Login</button>
+					)}
+				</ul>
+			)}
 
-				<IconButton
-					size='large'
-					edge='end'
-					color='inherit'
-					aria-label='menu'
-					onClick={toggleNav}
-					className='toogle-nav'
-					sx={{
-						display: {
-							mr: 2,
-							xs: "inline-flex",
-							lg: "none",
-						},
-					}}>
-					<MenuIcon sx={{ fontSize: "3rem" }} />
-				</IconButton>
-			</nav>
-		</div>
+			<IconButton
+				size='large'
+				edge='end'
+				color='inherit'
+				aria-label='menu'
+				onClick={toggleNav}
+				className='toggle-nav'
+				sx={{
+					display: {
+						mr: 2,
+						xs: "inline-flex",
+						sm: "none",
+					},
+				}}>
+				<MenuIcon sx={{ fontSize: "3rem" }} />
+			</IconButton>
+		</nav>
 	);
 };
 

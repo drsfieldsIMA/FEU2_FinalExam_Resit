@@ -15,6 +15,7 @@ import BoxList from "../components/lists/BoxList";
 
 function getKeyByValueCart(object: object | any, value: number) {
 	if (Object.keys(object).find((key) => object[key] === value)) {
+		console.log("line 18", value);
 		return value;
 	} else {
 		return 0;
@@ -24,6 +25,8 @@ function getKeyByValueCart(object: object | any, value: number) {
 function Cart({ gameArray }: { gameArray: Array<any> | any }) {
 	const [news, setNews] = React.useState([]);
 	const [renderCount, setRenderCount] = React.useState(0);
+	const [noGames, setNoGames] = React.useState(0);
+	const [totGames, setTotGames] = React.useState(0);
 	console.log("render Count", renderCount);
 	let cartObject: object = {};
 
@@ -32,20 +35,14 @@ function Cart({ gameArray }: { gameArray: Array<any> | any }) {
 			const cartObj: string | any = localStorage.getItem("cartObj");
 			//	console.log("cartObj",cartObj)
 			cartObject = JSON.parse(cartObj);
-			const cartArray: object = [cartObject];
+			const cartArray: Array<String> | any = Object.values(cartObject);
+			const noOfGames = cartArray.length;
+			const TotalOfGames = 20 * noOfGames;
+			setNoGames(noOfGames);
+			setTotGames(TotalOfGames);
+			setNews(cartArray);
+			console.log("News", news);
 		}
-
-		let Tp = "";
-		var cartGames: Array<any> | any = [];
-		let counter = 0;
-		gameArray.map((game: { id: string }) =>
-			getKeyByValueCart(cartObject, parseInt(game.id)) > 0
-				? ((counter = cartGames.length),
-				  (cartGames[counter] = game),
-				  // console.log("cartGames",cartGames),
-				  setNews(cartGames))
-				: null
-		);
 	}, [gameArray, renderCount]);
 
 	async function deleteCartGameTop(news: object | any, value: number) {
@@ -58,32 +55,63 @@ function Cart({ gameArray }: { gameArray: Array<any> | any }) {
 
 		localStorage.setItem("cartObj", JSON.stringify(newsArray));
 		setNews(newsArray);
+		console.log("news", news);
 	}
 
 	return (
 		<>
 			<Header></Header>
-			<Heading content='Cart Page'></Heading>
+			<Heading
+				classNameString='page_title'
+				size='1'
+				color='#fbf9be'
+				content='Cart Page'></Heading>
 			<main>
-				<ul style={{ backgroundColor: "white", color: "black" }}>
-					{news ? (
-						news.map((item: object | any) => (
-							<>
-								<BoxList key={item.id} article={item}></BoxList>
-								<Button
-									variant='outlined'
-									onClick={() => (
-										deleteCartGameTop(news, item.id),
-										setRenderCount((prevState: number) => prevState + 1)
-									)}>
-									Buy
-								</Button>
-							</>
-						))
-					) : (
-						<p>sorry no items in array</p>
-					)}
-				</ul>
+				<button
+					onClick={() => setRenderCount((prevState: number) => prevState + 1)}>
+					Load Games
+				</button>
+				<div style={{ backgroundColor: "white", color: "black" }}>
+					<table>
+						<tr>
+							<th className='tab-column'>Game</th>
+							<th className='tab-column'>Price</th>
+							<th className='tab-column'>Remove</th>
+						</tr>
+						{news.length > 0 ? (
+							news.map((item: object | any, index) => (
+								<tr key={index}>
+									<td key={item.title}>{item.title}</td>
+									<td key={item.category}>$20</td>
+									<td key={item.id}>
+										<Button
+											key={index}
+											variant='outlined'
+											className='MyFilled'
+											onClick={() => (
+												deleteCartGameTop(news, item.id),
+												setRenderCount((prevState: number) => prevState + 1)
+											)}>
+											Remove
+										</Button>
+									</td>
+								</tr>
+							))
+						) : (
+							<tr>
+								<td>sorry no items in array</td>
+							</tr>
+						)}
+						<tfoot>
+							<tr>
+								<th className='tab-column'>Total Games</th>
+								<th className='tab-column'>{noGames}</th>
+								<th className='tab-column'>Total Cost</th>
+								<th className='tab-column'>{totGames}</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
 			</main>
 		</>
 	);
@@ -100,8 +128,7 @@ export async function getServerSideProps() {
 		},
 	});
 
-	const gameArrayFull = await response.json();
-	const gameArray = gameArrayFull.slice(0, 10);
+	const gameArray = await response.json();
 	return {
 		props: { gameArray },
 	};

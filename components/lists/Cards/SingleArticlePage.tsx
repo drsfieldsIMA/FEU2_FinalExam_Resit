@@ -13,7 +13,7 @@ import NextLink from "next/link";
 import React from "react";
 import { Description } from "@mui/icons-material";
 
-type AssetType = {
+type gameType = {
 	title: string;
 	short_description: string;
 	screenshots: Array<any>;
@@ -21,7 +21,7 @@ type AssetType = {
 	category: string;
 	id: number | string;
 };
-export default function SingleArticlePage({ single }: { single: AssetType }) {
+export default function SingleArticlePage({ single }: { single: gameType }) {
 	return (
 		<>
 			<Box>

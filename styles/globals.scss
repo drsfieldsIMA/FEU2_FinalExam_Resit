@@ -1,6 +1,5 @@
 /** @format */
-
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap");
+@import "./Modal.scss";
 
 @font-face {
 	font-family: "hermes";
@@ -29,6 +28,7 @@ $breakpoint_xxl: 1600px;
 
 $primary_blue: #4b68bf;
 $secondary_blue: #1c2c5b;
+$button_blue: #42a9df;
 $light_blue: #b7e6f8;
 $grey: #f0f7ff !important;
 $dark_blue: #1a2040;
@@ -49,7 +49,7 @@ html,
 body {
 	padding: 0;
 	margin: 0;
-	font-family: "Rubik", sans-serif !important;
+	font-family: "demos-next", sans-serif !important;
 	font-style: normal;
 	font-size: 12.5px;
 	width: 100%;
@@ -113,6 +113,13 @@ button {
 	margin: 0 auto;
 }
 
+.heading-block {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	background: transparent;
+}
+
 .tab-container {
 	display: flex;
 	flex-direction: row;
@@ -122,18 +129,52 @@ button {
 }
 
 .MyEmpty {
-	background-color: $active_green !important;
-	color: #b7e6f8 !important;
+	font-family: "Hermes";
+	background: $cream !important;
+	color: $dark_tertiary !important;
+	&:hover {
+		background: $active_green !important;
+		color: $dark_tertiary !important;
+	}
+}
+
+.tab-column {
+	width: 100px;
 }
 
 .MyFilled {
+	font-family: "Hermes";
 	background-color: $red !important;
-	color: #b7e6f8 !important;
+	color: $cream !important;
 }
 
 .tab-btn {
-	background-color: $light_blue;
+	background: #fbf9be !important;
 	color: $dark_blue !important;
+	&:hover {
+		transition: 1s all;
+		background: $active_green !important;
+		color: #160f09 !important;
+	}
+}
+
+.active-btn {
+	background: $active_green !important;
+	color: $cream !important;
+	pointer-events: none;
+	cursor: default;
+}
+
+.primary-btn {
+	background: $active_green;
+	color: $dark_blue !important;
+	padding: $button-padding;
+	max-height: 50px;
+	&:hover {
+		transition: 1s all;
+		background: $button_blue !important;
+		color: $grey !important;
+	}
 }
 
 .height-75 {
@@ -148,13 +189,57 @@ button {
 .MuiButtonBase-root {
 	margin-right: 0 !important;
 	border-radius: 3px;
+	background: $button_blue;
 }
 
 @media (min-width: 980px) {
 	.toggle-nav {
 		display: none;
 	}
+
+	.items {
+		display: flex;
+		flex-direction: column;
+		margin-left: 30px;
+	}
+	.nav-cart-item {
+		display: flex;
+		flex-direction: column;
+		background-image: url("../public/basket_icon.svg");
+		width: 50px;
+		height: 50px;
+	}
+
+	.nav-genre-item {
+		display: flex;
+		flex-direction: column;
+		background-image: url("../public/genre_icon.svg");
+		width: 50px;
+		height: 50px;
+	}
+
+	.nav-card-item {
+		display: flex;
+		flex-direction: column;
+		background-image: url("../public/card_icon.svg");
+		width: 50px;
+		height: 50px;
+	}
+
+	.genre-svg {
+		display: block;
+		width: 50px;
+		height: 50px;
+	}
+
+	.nav-genre-item {
+		display: flex;
+		flex-direction: column;
+		width: 50px;
+		height: 50px;
+	}
 }
+
 .start-tab {
 	color: $light_blue !important;
 	flex-grow: 1;
@@ -173,7 +258,8 @@ fieldset {
 }
 
 .drop-down {
-	background: white !important;
+	background: transparent !important;
+	font-family: "demos-next" !important;
 }
 .registration-tab {
 	background-color: $dark !important;
@@ -230,11 +316,51 @@ input[type="password"] {
 }
 
 .disabled {
-	background: $dark_blue !important;
 	opacity: 0.7 !important;
-	color: #1672a4;
 	pointer-events: none;
 	cursor: default;
+	background: transparent;
+}
+
+.page_title {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	justify-content: center;
+	font-size: 2.05rem;
+	margin-bottom: 0 !important;
+}
+
+.disabled-h1 {
+	font-size: 3rem;
+	color: $gold;
+	pointer-events: none;
+	cursor: default;
+	background: transparent;
+	text-decoration: underline;
+}
+
+.tab-button {
+	padding: $button-padding !important;
+	max-height: 60px !important;
+}
+
+.tab-button.disabled {
+	background: $dark_blue;
+	opacity: 0.4;
+}
+
+.active-h1 {
+	font-size: 2rem !important;
+	color: $gold;
+	text-decoration: none;
+	opacity: 1;
+	background: transparent !important;
+	transition: 1s all;
+	&:hover {
+		text-decoration: underline;
+		font-size: 3rem !important;
+	}
 }
 
 .flex-box__container {
@@ -244,10 +370,50 @@ input[type="password"] {
 }
 .flex-box {
 	display: inline-flex;
-	justify-content: space-around;
+	justify-content: flex-start;
 	width: 100% !important;
 	margin: 1rem 0;
 }
+
+.flex-box__container__id {
+	display: block;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.detail-h1 {
+	font-size: 3rem;
+	font-family: "Hermes";
+	color: $button_blue;
+	letter-spacing: 5px;
+}
+
+.detail-h2,
+.detail-price {
+	font-size: 2.5rem;
+	font-family: "Hermes";
+	color: $button_blue;
+	letter-spacing: 5px;
+}
+.detail-price {
+	font-family: "Hermes";
+	color: $button_blue;
+}
+
+.flex-box__id {
+	display: inline-flex;
+	justify-content: space-between;
+	width: 100% !important;
+	margin: 1rem 0;
+}
+
+.detail-btn {
+	min-height: 50px;
+	max-height: 60px;
+	font-size: 16px;
+	font-family: "Hermes";
+}
+
 /* PROGRESS BAR */
 .progressbar {
 	width: 400px;
@@ -291,6 +457,7 @@ input:focus {
 }
 
 .card-h1 {
+	color: #1a2040 !important;
 	font-size: 1.4rem;
 	font-family: "hermes";
 }
@@ -475,8 +642,31 @@ header .banner {
 	width: 85%;
 	padding-bottom: 30px;
 	text-align: center;
-	font: 24px "opensans-bold", sans-serif;
+	font-family: 24px;
 	font-weight: bold;
+}
+
+.link-button {
+	font-family: "Hermes";
+	background-color: #2b6ed4;
+	color: $cream;
+	padding: $button-padding !important;
+	font-size: 14px;
+	max-height: 50px !important;
+	border-radius: 3px;
+}
+
+.link-button:before {
+	display: inline-flex;
+	content: " ";
+	background-image: url(/_next/static/media/details_icon.bb6f9835.svg);
+	background-size: 18px 18px;
+	height: 18px;
+	width: 18px;
+	align-self: flex-start !important;
+	margin-right: 15px;
+	padding: 0 !important;
+	overflow-y: none;
 }
 
 header .banner-text {
@@ -494,7 +684,7 @@ header .banner-text {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	padding: 0 10px;
+	padding: 1rem 10px;
 }
 
 .player-wrapper {
@@ -512,6 +702,9 @@ header .banner-text {
 	position: absolute;
 	top: 0;
 	left: 0;
+}
+
+.isValid {
 }
 
 .product-box {
@@ -594,7 +787,7 @@ header .banner-text {
 }
 
 .login-btn {
-	background-color: $green !important;
+	background-color: $active_green !important;
 	color: $cream !important;
 	&:hover {
 		background-color: $cream !important;
@@ -628,7 +821,66 @@ header .banner-text {
 	border: 2px solid $dark_blue !important;
 }
 
+.checkout-summary {
+	display: flex;
+	flex-direction: row;
+	justify-self: center;
+	width: fit-content;
+	padding: $button-padding;
+	border-bottom: 2px $red solid;
+	margin-bottom: 15px;
+}
+
+th {
+	letter-spacing: 2px;
+	border: 1px solid $dark_blue;
+}
+
+td {
+	letter-spacing: 1px;
+}
+
+tbody td {
+	text-align: center;
+}
+
+tfoot th {
+	text-align: right;
+}
+
 @media screen and (max-width: $breakpoint_sm) {
+	.header ul {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		list-style: none;
+		flex-direction: column;
+		margin-top: 230px;
+		background: $cream;
+		width: 100%;
+		z-index: 10000;
+		padding: 6px 0 !important;
+
+		li {
+			width: 100%;
+			min-height: 3.5rem;
+			border: 1px solid #1c2c5b;
+			margin: 0 auto !important;
+		}
+	}
+
+	.header a,
+	.drop-down {
+		color: #4b68bf;
+		margin-right: 20px;
+		font-size: 15.6px;
+		text-transform: uppercase;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		align-content: center;
+		vertical-align: middle;
+	}
 	.html,
 	body {
 		font-size: 12px;
@@ -644,8 +896,27 @@ header .banner-text {
 		width: 95% !important;
 		margin: 0 auto;
 	}
-
 	.content-container {
 		columns: 1;
+	}
+
+	.flex-box__container {
+		width: 98%;
+		margin: 0 auto;
+	}
+	.active-h1 {
+		font-size: 1rem;
+		&:hover {
+			text-decoration: underline;
+			font-size: 1.15rem;
+		}
+	}
+	.disabled-h1 {
+		font-size: 1rem;
+	}
+}
+@media screen and (min-width: 768px) {
+	.toggle-nav {
+		display: none;
 	}
 }

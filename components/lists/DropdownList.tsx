@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { genreArrayLabels } from "../../utils/backend";
 
 export default function DropdownList() {
 	const [anchorEl, setAnchorEl] = React.useState(null);
@@ -36,15 +37,11 @@ export default function DropdownList() {
 				MenuListProps={{
 					"aria-labelledby": "basic-button",
 				}}>
-				<MenuItem onClick={handleClose}>
-					<a href='/category'>Music</a>
-				</MenuItem>
-				<MenuItem onClick={handleClose}>
-					<a href='/category'>Simulation</a>
-				</MenuItem>
-				<MenuItem onClick={handleClose}>
-					<a href='/category'>Adventure</a>
-				</MenuItem>
+				{genreArrayLabels.slice(0, 10).map((item, index): any => (
+					<MenuItem key={item.id} onClick={handleClose}>
+						<a href={`/browse?${item.name}`}>{item.name}</a>
+					</MenuItem>
+				))}
 			</Menu>
 		</>
 	);

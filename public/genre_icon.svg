@@ -5,11 +5,12 @@
 <style type="text/css">
 	.st0{fill:#42A9DF;stroke:#42A9DF;stroke-miterlimit:10;}
 	.st1{fill:#FBD124;}
-	.st2{fill:#FCB536;stroke:#142129;stroke-width:2;stroke-miterlimit:10;}
+	.st2{fill:#FCB536;stroke:#231F20;stroke-width:2;stroke-miterlimit:10;}
 </style>
-<ellipse class="st0" cx="46.3" cy="44.5" rx="45.6" ry="45.7"/>
+<ellipse class="st0" cx="46.3" cy="45.5" rx="45.6" ry="45.7"/>
 <path class="st1" d="M13.6,23.2"/>
-<path class="st2" d="M88.5,44.3l-12.6,41v0.6H57.1l0,0H22.7v-0.6l-12.6-41L8.2,40c0-1.8,1.7-3.2,3.9-3.2h22.1L-0.2,5.7
-	C-1,4.9-1,3.8-0.2,3.2l2.3-2.1C3,0.3,4.2,0.3,5,1.2l38.8,35.2c0.1,0.1,0.1,0.3,0.3,0.4h0.4v6.4H20.2l10.6,30.4
-	c0.7,1.9,2.7,3.2,4.7,3.2h5.9l0,0h21.4c2.3,0,4.3-1.2,4.7-3.2L78.2,43h-5.1v-7.9h12.7c2.4,0,4.4,1.8,4.4,4L88.5,44.3z"/>
+<ellipse class="st2" cx="66.4" cy="69.8" rx="20.4" ry="19"/>
+<polygon class="st2" points="41.6,67 20.9,24.4 0.5,66.2 "/>
+<polygon class="st2" points="90.6,17.8 84.1,8.9 69,19.9 56.6,5.1 48.1,12.2 60.1,26.4 45.4,37.2 51.8,46.1 67.1,34.9 78.9,48.9 
+	87.3,41.9 76.1,28.4 "/>
 </svg>

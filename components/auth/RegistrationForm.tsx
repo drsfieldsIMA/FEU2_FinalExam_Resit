@@ -25,6 +25,7 @@ import { Password } from "@mui/icons-material";
 import TabContext, { useTabContext } from "@mui/lab/TabContext";
 import { valueContext } from "../../hooks/userContext";
 import { checkEmailString } from "../clickHandlers/checkEmailString";
+import { handleBreakpoints } from "@mui/lab/node_modules/@mui/system";
 
 export interface MyTabContextValue {
 	valueTab: string;
@@ -59,6 +60,7 @@ function RegistrationForm({
 	const [IsValidEmail, setIsValidEmail] = useState(false);
 	const [IsValidPassword, setIsValidPassword] = useState(false);
 	const [email, setEmail] = useState("");
+	const [password_1, setPassword_1] = useState("");
 	const [focusMessagePassword, setFocusMessagePassword] = useState("");
 
 	const passwordRegex = /\S/;
@@ -71,7 +73,6 @@ function RegistrationForm({
 	const nameRegex = /\S/;
 
 	const [data, setData]: object | any = useState({});
-	const [password_1, setPassword_1] = useState("");
 
 	const { register, handleSubmit } = useForm({
 		resolver: yupResolver(schema),
@@ -85,13 +86,11 @@ function RegistrationForm({
 
 	const validateName = (event: React.ChangeEvent<any>) => {
 		const name = event.target.value;
-		console.log("name==>", name);
+		console.log("name==>", event.target.classList);
 		if (nameRegex.test(name) && name.length > 4) {
 			setIsValid(true);
 			setMessage("Your Name looks good");
-			const newData: Array<any> | any = { ...data };
-			newData[event.target.name] = event.target.value;
-			setData(newData);
+			handleChange(event);
 		} else {
 			setIsValid(false);
 			setMessage("Please enter a name with more than 3 characters!");
@@ -104,9 +103,7 @@ function RegistrationForm({
 			setIsValidPassword(true);
 			setFocusMessagePassword("Your password looks good");
 			setPassword_1(pass);
-			const newData: Array<any> | any = { ...data };
-			newData[event.target.name] = event.target.value;
-			setData(newData);
+			handleChange(event);
 		} else {
 			setIsValidPassword(false);
 			setFocusMessagePassword(
@@ -120,10 +117,6 @@ function RegistrationForm({
 		if (repeatedPass === password_1) {
 			setIsValidDuplicatePassword(true);
 			setMessageDuplicatePassword("Your passwords match!");
-			const newData: Array<any> | any = { ...data };
-			newData["password"] = repeatedPass;
-			setData(newData);
-			console.log("handleChange", data);
 		} else {
 			setIsValidDuplicatePassword(false);
 			setMessageDuplicatePassword("Please re-enter your chosen password");
@@ -141,9 +134,7 @@ function RegistrationForm({
 			setIsValidEmail(true);
 			setFocusMessageEmail("Your email looks good");
 			setEmail(userEmail);
-			const newData: Array<any> | any = { ...data };
-			newData[event.target.name] = event.target.value;
-			setData(newData);
+			handleChange(event);
 		} else {
 			setIsValidEmail(false);
 			setFocusMessageEmail("Please enter a email with more than 2 characters!");
@@ -155,6 +146,7 @@ function RegistrationForm({
 		data: object | any
 	) {
 		event.preventDefault();
+		console.log("data==>", data);
 		setSubmitting(true);
 		setLoginError(null);
 		setIsValid(false);

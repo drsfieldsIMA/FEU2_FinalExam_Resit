@@ -34,6 +34,7 @@ import { userContext, valueContext } from "../hooks/userContext";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { duplicatedPassword } from "../components/clickHandlers/checkNumberOnCard";
 import Header from "../components/navigation/Header";
+import { Heading } from "../components/Layout";
 
 interface IMyValue {
 	valueTab: string | any;
@@ -42,9 +43,7 @@ interface IMyValue {
 
 const schema = yup.object().shape({
 	userName: yup.string().required("Please enter your first name"),
-	email: yup.string().required("Please enter your first name"),
 	password: yup.string().required("Please enter your password"),
-	password_2: yup.string().required("Please enter your password"),
 });
 
 function HomeForm(props: IMyValue) {
@@ -58,7 +57,7 @@ function HomeForm(props: IMyValue) {
 	const [isLoginValid, setIsLoginValid] = useState(false);
 	const [focusMessagePassword, setFocusMessagePassword] = useState("");
 
-	const { register, handleSubmit } = useForm({
+	const { register, handleSubmit, reset, formState } = useForm({
 		resolver: yupResolver(schema),
 	});
 
@@ -67,15 +66,19 @@ function HomeForm(props: IMyValue) {
 
 	const FormTitles = ["Start", "Registration", "Log In"];
 
+	const handleChange = (e: React.ChangeEvent<any>) => {
+		const newData: Array<any> | any = { ...data };
+		newData[e.target.name] = e.target.value;
+		setData(newData);
+	};
+
 	const validateName = (event: React.ChangeEvent<any>) => {
 		const name = event.target.value;
 		console.log("name==>", name);
 		if (nameRegex.test(name) && name.length > 4) {
 			setIsValid(true);
 			setMessage("Your Name looks good");
-			const newData: Array<any> | any = { ...data };
-			newData[event.target.name] = event.target.value;
-			setData(newData);
+			handleChange(event);
 		} else {
 			setIsValid(false);
 			setMessage("Please enter a name with more than 3 characters!");
@@ -88,11 +91,7 @@ function HomeForm(props: IMyValue) {
 		if (passwordRegex.test(pass) && pass.length > 2) {
 			setIsValidPassword(true);
 			setFocusMessagePassword("Your password looks good");
-			setPassword(pass);
-			const newData: Array<any> | any = { ...data };
-			newData[event.target.name] = event.target.value;
-			setData(newData);
-			console.log("pass==>", pass);
+			handleChange(event);
 		} else {
 			setIsValidPassword(false);
 			setFocusMessagePassword(
@@ -157,9 +156,7 @@ function HomeForm(props: IMyValue) {
 									type='text'
 									{...register("userName")}
 									value={data.userName}
-									onChange={(e: React.ChangeEvent<any>) => {
-										validateName(e);
-									}}
+									onChange={validateName}
 									className='input'></input>
 								<label className='label' htmlFor='username'>
 									Username / Email
@@ -175,9 +172,7 @@ function HomeForm(props: IMyValue) {
 								<input
 									placeholder='password'
 									{...register("password")}
-									onChange={(e: React.ChangeEvent<any>) => {
-										validatePassword(e);
-									}}
+									onChange={validatePassword}
 									type='password'
 									value={data.password}
 									className='input'
@@ -208,6 +203,18 @@ function HomeForm(props: IMyValue) {
 								}}>
 								Log in
 							</button>
+							<button
+								type='button'
+								onClick={() => {
+									reset({
+										userName: "",
+										password: "",
+									}),
+										setData("");
+								}}
+								className='btn btn-info'>
+								Reset
+							</button>
 						</div>
 					</Grid>
 				</fieldset>
@@ -218,7 +225,6 @@ function HomeForm(props: IMyValue) {
 	return (
 		<div className='splash-body'>
 			<Header />
-			<h1>{FormTitles[page]}</h1>
 			<div className='flex-box__container'>
 				<div className='flex-box'>
 					<button
@@ -228,12 +234,39 @@ function HomeForm(props: IMyValue) {
 						}}>
 						{"Previous"}
 					</button>
-					<div className='progressbar'>
-						<div
-							style={{
-								width: page === 0 ? "33.3%" : page == 1 ? "66.6%" : "100%",
-							}}></div>
-					</div>
+					<Button
+						className={
+							page !== 0
+								? " heading-block active-h1"
+								: " heading-block disabled-h1"
+						}
+						onClick={() => {
+							setPage(0);
+						}}>
+						{FormTitles[0]}
+					</Button>
+					<Button
+						className={
+							page !== 1
+								? " heading-block active-h1"
+								: " heading-block disabled-h1"
+						}
+						onClick={() => {
+							setPage(1);
+						}}>
+						{FormTitles[1]}
+					</Button>
+					<Button
+						className={
+							page !== 2
+								? " heading-block active-h1"
+								: " heading-block disabled-h1"
+						}
+						onClick={() => {
+							setPage(2);
+						}}>
+						{FormTitles[2]}
+					</Button>
 					<button
 						className={page === 2 ? "tab-button disabled" : "tab-button"}
 						onClick={() => {

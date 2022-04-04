@@ -5,7 +5,7 @@
  */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useQuery, useQueryClient } from "react-query";
-import React, { useState, FC, useEffect } from "react";
+import React, { useState, FC, useEffect, useRef } from "react";
 import Layout, { Heading } from "../components/Layout";
 import { gameObj, genreArray } from "./api/games/gamesArray";
 import { CircularProgress, Grid, responsiveFontSizes } from "@mui/material";
@@ -26,8 +26,13 @@ import useDebounce from "../utils/useDebounce";
 import useLocalStorage from "../hooks/useLocalStorage";
 import CartButton from "../components/CartButton";
 import { Box } from "reflexbox";
+import ListAltIcon from "@mui/icons-material/ListAlt";
 
-const getArticles = async (categoryName: string) => {
+const getArticles = async (
+	categoryName: string,
+	isLoading: boolean,
+	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
 	//			const newData=`fields name,version_title,cover.*,screenshots.*,artworks.*;where genres=${ID}; limit 10;`
 	//			const request= await api.post("games", newData)
 	//	console.log("categoryName==>", categoryName);
@@ -50,6 +55,7 @@ const getArticles = async (categoryName: string) => {
 		console.log("error==>", err);
 		return;
 	} finally {
+		setIsLoading(false);
 	}
 };
 
@@ -75,12 +81,20 @@ function browsePage({ gameArray }: { gameArray: Array<any> | null }) {
 	const [renderCount, setRenderCount] = React.useState(0);
 	const [isLoading, setIsLoading] = React.useState(true);
 
+	let tabRef = useRef(null);
+
 	const debouncedSearchValue = useDebounce(genreID, 300);
+
+	const changeColor = async (event: React.ChangeEvent<any>) => {
+		console.log("ChangeColor==>", event);
+		const links = document.querySelector(".active-btn");
+		event.target.classList.toggle("active-btn");
+	};
 
 	async function getGenre(nameID: string | any) {
 		setIsLoading(true);
 		console.log("getGenre", nameID);
-		var T = await getArticles(nameID);
+		var T = await getArticles(nameID, isLoading, setIsLoading);
 		console.log("T", T);
 		setDataGenre(T);
 	}
@@ -98,15 +112,19 @@ function browsePage({ gameArray }: { gameArray: Array<any> | null }) {
 	return (
 		<>
 			<Header></Header>
-			<Heading content='Browse Page'></Heading>
+			<Heading
+				classNameString='page_title'
+				size='1'
+				color='#fbf9be'
+				content='Browse Page'></Heading>
 			<main>
-				<section className='tab-container'>
+				<section className='tab-container' ref={tabRef}>
 					{genreArrayLabels.slice(0, 10).map((item, index): any => (
 						<Button
 							key={item.id}
 							className='tab-btn'
 							variant='outlined'
-							onClick={(e) => getGenre(item.name)}>
+							onClick={(e) => (changeColor(e), getGenre(item.name))}>
 							{item.name}
 						</Button>
 					))}
@@ -127,7 +145,7 @@ function browsePage({ gameArray }: { gameArray: Array<any> | null }) {
 											className='hero'
 											style={{
 												backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_cover_big/${item.cover?.image_id}.jpg)`,
-												backgroundColor: `${"#000080"}`,
+												backgroundColor: `${"#f0f7ff"}`,
 												backgroundSize: `${"contain"}`,
 											}}></div>
 									) : item.artworks ? (
@@ -136,7 +154,7 @@ function browsePage({ gameArray }: { gameArray: Array<any> | null }) {
 											className='hero'
 											style={{
 												backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_cover_big/${item.artworks[0].image_id}.jpg)`,
-												backgroundColor: `${"#000080"}`,
+												backgroundColor: `${"#f0f7ff"}`,
 												backgroundSize: `${"contain"}`,
 											}}></div>
 									) : item.screenshots ? (
@@ -145,7 +163,7 @@ function browsePage({ gameArray }: { gameArray: Array<any> | null }) {
 											className='hero'
 											style={{
 												backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_cover_big/${item.screenshots[0].image_id}.jpg)`,
-												backgroundColor: `${"#000080"}`,
+												backgroundColor: `${"#f0f7ff"}`,
 												backgroundSize: `${"contain"}`,
 											}}></div>
 									) : (
@@ -153,11 +171,11 @@ function browsePage({ gameArray }: { gameArray: Array<any> | null }) {
 											className='hero'
 											style={{
 												backgroundImage: `url(${item.thumbnail})`,
-												backgroundColor: `${"#000080"}`,
+												backgroundColor: `${"#f0f7ff"}`,
 												backgroundSize: `${"contain"}`,
 											}}></div>
 									)}
-									<h1 className='card-h1'>{item.name}</h1>
+									<h1 className='card-h1'>{item.title}</h1>
 									<div className='button-group__card'>
 										<CartButton
 											ID={parseInt(item.id)}
@@ -165,7 +183,7 @@ function browsePage({ gameArray }: { gameArray: Array<any> | null }) {
 										<Link
 											key={item.name}
 											href={`/details/${parseInt(item.id)}`}>
-											<a className='link-button'>View Details </a>
+											<a className='link-button'> Details </a>
 										</Link>
 									</div>
 								</Card>

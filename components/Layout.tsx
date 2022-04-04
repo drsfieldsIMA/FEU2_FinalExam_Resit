@@ -60,10 +60,10 @@ export default function Layout({
 	);
 }
 
-export function Heading({ color, size, content }: any) {
+export function Heading({ color, size, content, classNameString }: any) {
 	const VariableHeading: string | any = `h${size}`;
 	return (
-		<div className='heading-block'>
+		<div className={`${classNameString}`}>
 			<VariableHeading style={{ color }}>{content}</VariableHeading>
 		</div>
 	);
@@ -73,15 +73,14 @@ Heading.propTypes = {
 	size: PropTypes.string,
 	content: PropTypes.string.isRequired,
 	color: PropTypes.string,
+	classNameString: PropTypes.string,
 	VariableHeading: PropTypes.node,
 	articles: PropTypes.any,
 };
 
 Layout.defaultProps = {
-	title: " Level up news  | Powered by Positivity ",
-	descrip:
-		"Be informed about local news, leverage positive information and your increase your profile",
-	keywords:
-		"Breaking News, Current headlines, Local News, Science, Sport, Culture and Nature, musical events ",
+	title: " Bits and Bobs | new games | new consoles ",
+	descrip: "",
+	keywords: " ",
 	gsv: "wenrVQYITXvXIH9sNnSmiBaOZ941XPPzAvnupQrq6RQ",
 };

@@ -25,6 +25,7 @@ import { Password } from "@mui/icons-material";
 import TabContext, { useTabContext } from "@mui/lab/TabContext";
 import { valueContext } from "../../hooks/userContext";
 import { checkNumberOnCard } from "../clickHandlers/checkNumberOnCard";
+import Modal from "./Modal";
 
 const schema = yup.object().shape({
 	Name: yup.string().required("Please the name on your card"),
@@ -33,14 +34,11 @@ const schema = yup.object().shape({
 		.min(12)
 		.max(12)
 		.required("please enter the name on the card exactly"),
-	cvcCode: yup
-		.number()
-		.required("Please enter your CVC code")
-		.min(3, "Must be exactly 3 digits")
-		.max(3, "Must be exactly 3 digits"),
+	cvcCode: yup.number().required("Please enter your CVC code").min(3).max(3),
 });
 
 function PaymentCardForm() {
+	const [modalOpen, setModalOpen] = useState(false);
 	const [submitting, setSubmitting] = useState(false);
 	const [loginError, setLoginError] = useState(null);
 
@@ -69,6 +67,7 @@ function PaymentCardForm() {
 
 	const validateName = (event: React.ChangeEvent<any>) => {
 		const name = event.target.value;
+		console.log("Validate Name", name);
 		if (nameRegex.test(name) && name.length > 4) {
 			setIsValid(true);
 			setMessage("Your Name looks good");
@@ -80,12 +79,12 @@ function PaymentCardForm() {
 
 	const validateNumberOnCard = (event: React.ChangeEvent<any>) => {
 		const pass = event.target.value;
+		console.log("Validate Number on Card", pass);
 		let check = checkNumberOnCard(pass, cardNumberRegex);
 		if (check) {
 			setIsValidNumber(true);
 			setFocusMessageCardNumber("Your card number looks good");
 			setCardNumberState(pass);
-			handleChange(event);
 		} else {
 			setIsValidNumber(false);
 			setFocusMessageCardNumber(
@@ -94,7 +93,9 @@ function PaymentCardForm() {
 		}
 	};
 
-	async function onSubmit(data: object | any) {
+	async function onSubmit(e: React.ChangeEvent, data: object | any) {
+		console.log("Button submit");
+		e.preventDefault();
 		setSubmitting(true);
 		setLoginError(null);
 		setIsValid(false);
@@ -108,6 +109,7 @@ function PaymentCardForm() {
 				setMessage(
 					`your name and card are valid and your purchase has been processed`
 				); // It's an Error instance.
+				setModalOpen(true);
 			} else {
 				setMessage(`your name and card are invalid please check them`); // It's an Error instance.
 			}
@@ -123,58 +125,67 @@ function PaymentCardForm() {
 	}
 
 	return (
-		<Box
-			component='main'
-			sx={{
-				alignItems: "center",
-				display: "block",
-				flexGrow: 1,
-				minHeight: "100%",
-			}}
-			className='payment-form__container'>
-			<Container
+		<>
+			{modalOpen && <Modal setOpenModal={setModalOpen} />}
+			<Box
+				component='main'
 				sx={{
-					backgroundColor: "transparent",
+					alignItems: "center",
+					display: "block",
+					flexGrow: 1,
+					minHeight: "100%",
 				}}
-				maxWidth='sm'>
-				<form onSubmit={handleSubmit(onSubmit)}>
-					<div className={`message ${isValid ? "success" : "error"}`}>
-						{focusMessage}
-					</div>
-					<fieldset disabled={submitting}>
-						<label htmlFor='Name'> Name On Card</label>
-						<input
-							type='text'
-							placeholder='Jane, Ronny, Charlie'
-							{...register("Name")}
-							value={data.Name}
-							onChange={(e: React.ChangeEvent<any>) => {
-								handleChange(e), validateName;
-							}}></input>
-						<div></div>
-						<div className={`message ${isValidNumber ? "success" : "error"}`}>
+				className='payment-form__container'>
+				<Container
+					sx={{
+						backgroundColor: "transparent",
+					}}
+					maxWidth='sm'>
+					<form>
+						<div className={`message ${isValid ? "success" : "error"}`}>
 							{focusMessage}
 						</div>
-						<div></div>
-						<label htmlFor='OnCardNumber'>Number On Card</label>
-						<input
-							placeholder='Card Number'
-							type='text'
-							{...register("OnCardNumber")}
-							value={data.OnCardNumber}
-							onChange={validateNumberOnCard}
-						/>
-						<div className={`message ${isValidNumber ? "success" : "error"}`}>
-							{focusMessageCardNumber}
-						</div>
-						<div></div>
-						<button type='submit' className='addMemory'>
-							Pay With Card
-						</button>
-					</fieldset>
-				</form>
-			</Container>
-		</Box>
+						<fieldset disabled={submitting}>
+							<label htmlFor='Name'> Name On Card</label>
+							<input
+								type='text'
+								{...register("Name")}
+								value={data.Name ?? ""}
+								onChange={(e: React.ChangeEvent<any>) => {
+									handleChange(e), validateName(e);
+								}}></input>
+							<div></div>
+							<div className={`message ${isValidNumber ? "success" : "error"}`}>
+								{focusMessage}
+							</div>
+							<div></div>
+							<label htmlFor='OnCardNumber'>Number On Card</label>
+							<input
+								placeholder='Card Number'
+								type='text'
+								{...register("OnCardNumber")}
+								value={data.OnCardNumber ?? ""}
+								onChange={(e: React.ChangeEvent<any>) => {
+									handleChange(e), validateNumberOnCard(e);
+								}}
+							/>
+							<div className={`message ${isValidNumber ? "success" : "error"}`}>
+								{focusMessageCardNumber}
+							</div>
+							<div></div>
+							<button
+								type='submit'
+								className='addMemory'
+								onClick={(event: React.ChangeEvent<any>) =>
+									onSubmit(event, data)
+								}>
+								Pay With Card
+							</button>
+						</fieldset>
+					</form>
+				</Container>
+			</Box>
+		</>
 	);
 }
 
