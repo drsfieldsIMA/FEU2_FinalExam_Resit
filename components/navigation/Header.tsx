@@ -27,8 +27,10 @@ const Header: any = () => {
 		if (typeof window !== "undefined") {
 			const regObj: string | any = localStorage.getItem("registration");
 			const registrationArray = JSON.parse(regObj);
-			console.log("registration", registrationArray.userName);
-			setUser(registrationArray.userName);
+			if (registrationArray?.userName) {
+				console.log("registration", registrationArray.userName);
+				setUser(registrationArray.userName);
+			}
 		}
 	}, [setUser]);
 

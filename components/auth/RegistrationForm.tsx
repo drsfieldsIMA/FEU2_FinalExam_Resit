@@ -35,7 +35,6 @@ export interface MyTabContextValue {
 const API_URL = "https://level-up-strapi.herokuapp.com";
 
 const schema = yup.object().shape({
-	userName: yup.string().required("Please enter your first name"),
 	email: yup.string().required("Please enter your first name"),
 	password: yup.string().required("Please enter your password"),
 	password_2: yup.string().required("Please enter your password"),
@@ -202,7 +201,7 @@ function RegistrationForm({
 						<Grid container spacing={2} px={2} marginLeft={0}>
 							<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
 								<div className='input-container'>
-									<input
+									{/* 	<input
 										type='text'
 										{...register("userName")}
 										value={data.userName}
@@ -212,7 +211,7 @@ function RegistrationForm({
 										className='input'></input>
 									<label className='label' htmlFor='userName'>
 										First Name
-									</label>
+									</label> */}
 								</div>
 								<div></div>
 								<div className={`message ${IsValid ? "success" : "error"}`}>

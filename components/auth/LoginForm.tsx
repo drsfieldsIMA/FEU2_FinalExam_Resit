@@ -23,7 +23,7 @@ import router from "next/router";
 import { duplicatedPassword } from "../clickHandlers/checkNumberOnCard";
 
 const schema = yup.object().shape({
-	username: yup.string().required("Please enter your email"),
+	email: yup.string().required("Please enter your email"),
 	password: yup.string().required("Please enter your password"),
 });
 
@@ -128,11 +128,11 @@ function LoginForm() {
 					</div>
 
 					<fieldset disabled={submitting}>
-						<label htmlFor='username'>Username / Email</label>
+						<label htmlFor='email'>Username / Email</label>
 						<input
 							type='text'
 							placeholder='email address'
-							{...register("username")}></input>
+							{...register("email")}></input>
 						<div></div>
 						<div className={`message ${isValid ? "success" : "error"}`}>
 							{focusMessage}
