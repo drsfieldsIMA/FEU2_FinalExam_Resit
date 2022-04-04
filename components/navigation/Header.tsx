@@ -64,7 +64,8 @@ const Header: any = () => {
 						<Link href='/browse'>
 							<div className='nav-genre-item'></div>
 						</Link>
-						<DropdownList></DropdownList>
+
+						<DropdownList width={width}></DropdownList>
 					</li>
 					<li className='items'>
 						<Link href='/cart'>

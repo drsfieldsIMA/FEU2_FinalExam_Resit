@@ -80,7 +80,8 @@ h5 {
 }
 
 main {
-	width: 76%;
+	max-width: calc(98% - 4px) !important;
+	min-width: fit-content !important;
 	height: fit-content;
 	margin: 0 auto;
 }
@@ -131,7 +132,8 @@ button {
 	flex-direction: row;
 	flex-wrap: wrap !important;
 	justify-content: space-between !important;
-	margin-bottom: 2rem;
+	width: 94%;
+	margin: 10px auto;
 }
 
 .MyEmpty {
@@ -207,6 +209,7 @@ button {
 		display: flex;
 		flex-direction: column;
 		margin-left: 30px;
+		cursor: pointer !important;
 	}
 	.nav-cart-item {
 		display: flex;
@@ -268,6 +271,11 @@ fieldset {
 	font-family: "demos-next" !important;
 	text-transform: capitalize !important;
 	color: $primary_blue !important;
+	max-height: 1.5rem !important;
+	&:hover {
+		color: $active_green !important;
+		text-decoration: underline !important;
+	}
 }
 .registration-tab {
 	background-color: $dark !important;
@@ -725,6 +733,11 @@ header .banner {
 		0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%) !important;
 	background: $cream;
 	color: $dark_blue;
+	transition: 1s all;
+	&:hover {
+		background-color: $active_green;
+		text-decoration: underline;
+	}
 }
 
 .link-button:before {
@@ -854,6 +867,18 @@ header .banner-text {
 	color: $primary_blue;
 	margin-right: 20px;
 	font-size: 1.25rem;
+	transition: 1s all;
+	&:hover {
+		text-decoration: underline !important;
+	}
+}
+
+.header ul a {
+	transition: 1s all;
+	&:hover {
+		color: $active_green !important;
+		text-decoration: underline !important;
+	}
 }
 
 .login-btn {
@@ -916,6 +941,12 @@ tbody td {
 
 tfoot th {
 	text-align: right;
+}
+
+.MuiGrid-root {
+	width: calc(100% + 5px) !important;
+	flex-basis: 32.33% !important;
+	margin-left: 10px !important;
 }
 
 @media screen and (max-width: $breakpoint_sm) {
@@ -983,6 +1014,27 @@ tfoot th {
 	}
 	.disabled-h1 {
 		font-size: 1rem;
+	}
+
+	.tab-button {
+		display: none;
+	}
+
+	.heading-block {
+		font-size: 1.05rem !important;
+		max-width: fit-content;
+	}
+
+	.MuiGrid-root {
+		min-width: 380px !important;
+		max-width: 92% !important;
+		margin: 5px 5px !important;
+		padding: 0 0 !important;
+	}
+
+	main {
+		width: 92%;
+		margin: 0 auto !important;
 	}
 }
 @media screen and (min-width: 768px) {
