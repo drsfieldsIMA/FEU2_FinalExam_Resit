@@ -135,6 +135,7 @@ export async function getStaticProps({ params }: { params: object | any }) {
 	//const res = await fetch(`http://localhost:1337/games?Slug=${slug}`);
 	//	const data = await res.json();
 	//	const  game =  gameObject.filter(post => (post.Slug == slug));
+	let game = gameObj.filter((post) => post.id == 131237);
 	const response = await fetch(
 		`https://mmo-games.p.rapidapi.com/game?id=${id}`,
 		{
@@ -145,10 +146,9 @@ export async function getStaticProps({ params }: { params: object | any }) {
 			},
 		}
 	);
+
 	if (response.status === 200) {
-		let game = await response.json();
-	} else {
-		let game = gameObj.filter((post) => post.id == 131237);
+		game = await response.json();
 	}
 
 	//	console.log("game asset", asset);
