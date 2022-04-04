@@ -42,8 +42,8 @@ interface IMyValue {
 }
 
 const schema = yup.object().shape({
-	username: yup.string().required("Please enter your first name"),
-	password: yup.string().required("Please enter your password"),
+	username: yup.string(),
+	password: yup.string(),
 });
 
 function HomeForm(props: IMyValue) {
@@ -52,8 +52,8 @@ function HomeForm(props: IMyValue) {
 	const [IsValid, setIsValid] = useState(false);
 	const [focusMessage, setMessage] = useState("");
 	const [data, setData]: object | any = useState({});
-	const [userName, setUserName] = useState("");
-	const [password, setPassword] = useState("");
+	const [userName, setUserName] = useState("drsfieldsIMA@gmail.com");
+	const [password, setPassword] = useState("Pass1234");
 	const [IsValidPassword, setIsValidPassword] = useState(false);
 	const [isLoginValid, setIsLoginValid] = useState(false);
 	const [focusMessagePassword, setFocusMessagePassword] = useState("");
@@ -146,7 +146,15 @@ function HomeForm(props: IMyValue) {
 				</>
 			);
 		} else if (page === 1) {
-			return <RegistrationForm page={page} setPage={setPage} />;
+			//			return <RegistrationForm page={page} setPage={setPage} />;
+			<Heading
+				classNameString='page_title'
+				size='1'
+				color='#fbf9be'
+				content='Registration Form'></Heading>;
+			<Link href='/browse'>
+				<a>Explore</a>
+			</Link>;
 		} else {
 			return (
 				<fieldset>
