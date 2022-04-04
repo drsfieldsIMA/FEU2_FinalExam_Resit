@@ -117,7 +117,7 @@ button {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
-	background: transparent;
+	background: transparent !important;
 }
 
 .tab-container {
@@ -332,17 +332,30 @@ input[type="password"] {
 }
 
 .disabled-h1 {
-	font-size: 3rem;
-	color: $gold;
+	font-size: 16px;
+	color: $grey;
 	pointer-events: none;
 	cursor: default;
 	background: transparent;
-	text-decoration: underline;
+	text-decoration: none;
+	text-transform: capitalize;
 }
 
 .tab-button {
+	color: white;
 	padding: $button-padding !important;
 	max-height: 60px !important;
+	border-width: 2px;
+	border-style: outset;
+	border-color: -internal-light-dark(
+		rgb(118, 118, 118),
+		rgb(133, 133, 133)
+	) !important;
+
+	&:hover {
+		background-color: #04ceb4;
+		text-decoration: underline !important;
+	}
 }
 
 .tab-button.disabled {
@@ -351,15 +364,28 @@ input[type="password"] {
 }
 
 .active-h1 {
-	font-size: 2rem !important;
-	color: $gold;
+	font-size: 16px !important;
+	color: white;
 	text-decoration: none;
+	text-transform: capitalize;
 	opacity: 1;
-	background: transparent !important;
+	background: linear-gradient(
+		180deg,
+		#1c2956,
+		#1c3061,
+		#1b457b,
+		#186297,
+		#1672a4
+	) !important;
+	border-width: 2px;
+	border-style: outset;
+	border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+	padding: $button-padding;
 	transition: 1s all;
+	max-height: 60px !important;
 	&:hover {
 		text-decoration: underline;
-		font-size: 3rem !important;
+		background-color: #04ceb4 !important;
 	}
 }
 
@@ -371,6 +397,18 @@ input[type="password"] {
 .flex-box {
 	display: inline-flex;
 	justify-content: flex-start;
+	width: 100% !important;
+	margin: 1rem 0;
+}
+
+.flex-box__container-index {
+	display: block;
+	width: 100%;
+	margin: 0 auto;
+}
+.flex-box-index {
+	display: inline-flex;
+	justify-content: space-around;
 	width: 100% !important;
 	margin: 1rem 0;
 }
@@ -908,7 +946,7 @@ tfoot th {
 		font-size: 1rem;
 		&:hover {
 			text-decoration: underline;
-			font-size: 1.15rem;
+			font-size: 1.05rem;
 		}
 	}
 	.disabled-h1 {

@@ -28,8 +28,7 @@ const Header: any = () => {
 			const regObj: string | any = localStorage.getItem("registration");
 			const registrationArray = JSON.parse(regObj);
 			if (registrationArray?.userName) {
-				console.log("registration", registrationArray.userName);
-				setUser(registrationArray.userName);
+				setUser(registrationArray?.userName);
 			}
 		}
 	}, [setUser]);
@@ -95,7 +94,7 @@ const Header: any = () => {
 									// call logout
 									setUser(null), router.push("/");
 								}}>
-								{`${user}`}
+								{`Logout`}
 							</Button>
 						</>
 					) : (

@@ -35,7 +35,8 @@ export interface MyTabContextValue {
 const API_URL = "https://level-up-strapi.herokuapp.com";
 
 const schema = yup.object().shape({
-	email: yup.string().required("Please enter your first name"),
+	email: yup.string().required("Please enter your email"),
+	userName: yup.string().required("Please enter your first name"),
 	password: yup.string().required("Please enter your password"),
 	password_2: yup.string().required("Please enter your password"),
 });
@@ -199,9 +200,9 @@ function RegistrationForm({
 					</div>
 					<fieldset disabled={submitting}>
 						<Grid container spacing={2} px={2} marginLeft={0}>
-							<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+							<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
 								<div className='input-container'>
-									{/* 	<input
+									<input
 										type='text'
 										{...register("userName")}
 										value={data.userName}
@@ -211,14 +212,14 @@ function RegistrationForm({
 										className='input'></input>
 									<label className='label' htmlFor='userName'>
 										First Name
-									</label> */}
+									</label>
 								</div>
 								<div></div>
 								<div className={`message ${IsValid ? "success" : "error"}`}>
 									{focusMessage}
 								</div>
 							</Grid>
-							<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+							<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
 								<div className='input-container'>
 									<input
 										type='text'
@@ -237,7 +238,7 @@ function RegistrationForm({
 									{focusMessageEmail}
 								</div>
 							</Grid>
-							<Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
+							<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
 								<div className='input-container'>
 									<input
 										{...register("password_1")}
@@ -259,7 +260,7 @@ function RegistrationForm({
 								</div>
 								<div></div>
 							</Grid>
-							<Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
+							<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
 								<div className='input-container'>
 									<input
 										{...register("password_2")}
@@ -287,12 +288,6 @@ function RegistrationForm({
 								className='addMemory'
 								onClick={(event) => setFormData(event, data)}>
 								Register Details
-							</button>
-							<button
-								onClick={() => {
-									setPage((currPage) => currPage - 1);
-								}}>
-								Prev
 							</button>
 						</div>
 					</fieldset>

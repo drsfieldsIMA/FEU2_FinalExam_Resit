@@ -146,19 +146,21 @@ function HomeForm(props: IMyValue) {
 				</>
 			);
 		} else if (page === 1) {
-			//			return <RegistrationForm page={page} setPage={setPage} />;
-			<Heading
-				classNameString='page_title'
-				size='1'
-				color='#fbf9be'
-				content='Registration Form'></Heading>;
-			<Link href='/browse'>
-				<a>Explore</a>
-			</Link>;
+			return (
+				<>
+					<Heading
+						classNameString='page_title'
+						size='1'
+						color='#fbf9be'
+						content='Registration Form'></Heading>
+					;
+					<RegistrationForm page={page} setPage={setPage} />;
+				</>
+			);
 		} else {
 			return (
 				<fieldset>
-					{/* 	<Grid container spacing={2} px={2} marginLeft={0}>
+					<Grid container spacing={2} px={2} marginLeft={0}>
 						<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
 							<div className='input-container'>
 								<input
@@ -198,13 +200,6 @@ function HomeForm(props: IMyValue) {
 						</Grid>
 						<div className='button-form__container'>
 							<button
-								disabled={page == 0}
-								onClick={() => {
-									setPage((currPage) => currPage - 1);
-								}}>
-								Prev
-							</button>
-							<button
 								type='submit'
 								className='addMemory'
 								onClick={(event) => {
@@ -225,7 +220,7 @@ function HomeForm(props: IMyValue) {
 								Reset
 							</button>
 						</div>
-					</Grid> */}
+					</Grid>
 				</fieldset>
 			);
 		}
@@ -234,8 +229,8 @@ function HomeForm(props: IMyValue) {
 	return (
 		<div className='splash-body'>
 			<Header />
-			<div className='flex-box__container'>
-				<div className='flex-box'>
+			<div className='flex-box__container-index'>
+				<div className='flex-box-index'>
 					<button
 						className={page === 0 ? "tab-button disabled" : "tab-button"}
 						onClick={() => {

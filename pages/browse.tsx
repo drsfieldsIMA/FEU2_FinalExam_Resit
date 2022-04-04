@@ -196,7 +196,7 @@ function browsePage({ gameArray }: { gameArray: Array<any> | null }) {
 	);
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
 	//const  res=await fetch(`${API_URL}/api/news`);
 	//	const res = await fetch(`${API_URL}/games`);
 	//const gameArray = gameObj;
@@ -214,6 +214,7 @@ export async function getServerSideProps() {
 	const gameArrayFull = await response.json();
 	let gameArray = [];
 	gameArray = gameArrayFull.slice(0, 40);
+	//let gameArray = gameObj;
 	return {
 		props: { gameArray },
 	};
