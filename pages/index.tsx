@@ -42,7 +42,7 @@ interface IMyValue {
 }
 
 const schema = yup.object().shape({
-	userName: yup.string().required("Please enter your first name"),
+	username: yup.string().required("Please enter your first name"),
 	password: yup.string().required("Please enter your password"),
 });
 
@@ -155,7 +155,8 @@ function HomeForm(props: IMyValue) {
 							<div className='input-container'>
 								<input
 									type='text'
-									{...register("userName")}
+									{...register("username")}
+									value={data.userName}
 									onChange={validateName}
 									className='input'></input>
 								<label className='label' htmlFor='userName'>
@@ -174,6 +175,7 @@ function HomeForm(props: IMyValue) {
 									{...register("password")}
 									onChange={validatePassword}
 									type='password'
+									value={data.password}
 									className='input'
 								/>
 								<label className='label' htmlFor='password'>
