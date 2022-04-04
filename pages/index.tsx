@@ -159,69 +159,75 @@ function HomeForm(props: IMyValue) {
 			);
 		} else {
 			return (
-				<fieldset>
-					<Grid container spacing={2} px={2} marginLeft={0}>
-						<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-							<div className='input-container'>
-								<input
-									type='text'
-									{...register("username")}
-									value={data.userName}
-									onChange={validateName}
-									className='input'></input>
-								<label className='label' htmlFor='userName'>
-									Username / Email
-								</label>
-							</div>
-							<div></div>
-							<div className={`message ${IsValid ? "success" : "error"}`}>
-								{focusMessage}
-							</div>
-						</Grid>
-						<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-							<div className='input-container'>
-								<input
-									placeholder='password'
-									{...register("password")}
-									onChange={validatePassword}
-									type='password'
-									value={data.password}
-									className='input'
-								/>
-								<label className='label' htmlFor='password'>
-									Password
-								</label>
+				<main>
+					<fieldset>
+						<Grid container spacing={2} px={2} marginLeft={0}>
+							<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+								<div className='input-container'>
+									<input
+										type='text'
+										{...register("username")}
+										value={data.userName}
+										onChange={validateName}
+										className='input'></input>
+									<label className='label' htmlFor='userName'>
+										Username / Email
+									</label>
+								</div>
 								<div></div>
-							</div>
-							<div
-								className={`message ${IsValidPassword ? "success" : "error"}`}>
-								{focusMessagePassword}
-							</div>
+								<div className={`message ${IsValid ? "success" : "error"}`}>
+									{focusMessage}
+								</div>
+							</Grid>
+							<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+								<div className='input-container'>
+									<input
+										placeholder='password'
+										{...register("password")}
+										onChange={validatePassword}
+										type='password'
+										value={data.password}
+										className='input'
+									/>
+									<label className='label' htmlFor='password'>
+										Password
+									</label>
+									<div></div>
+								</div>
+								<div
+									className={`message ${
+										IsValidPassword ? "success" : "error"
+									}`}>
+									{focusMessagePassword}
+								</div>
+							</Grid>
+							<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+								<div className='button-form__container'>
+									<button
+										type='submit'
+										className='addMemory'
+										onClick={(event) => {
+											SubmitData(data);
+										}}>
+										Log in
+									</button>
+									<button
+										type='button'
+										onClick={() => {
+											reset({
+												userName: "",
+												password: "",
+											}),
+												setData("");
+										}}
+										className='btn btn-info'>
+										Reset
+									</button>
+								</div>
+							</Grid>
 						</Grid>
-						<div className='button-form__container'>
-							<button
-								type='submit'
-								className='addMemory'
-								onClick={(event) => {
-									SubmitData(data);
-								}}>
-								Log in
-							</button>
-							<button
-								type='button'
-								onClick={() => {
-									reset({
-										userName: "",
-										password: "",
-									}),
-										setData("");
-								}}
-								className='btn btn-info'>
-								Reset
-							</button>
-						</div>
-					</Grid>
-				</fieldset>
+					</fieldset>
+				</main>
 			);
 		}
 	};

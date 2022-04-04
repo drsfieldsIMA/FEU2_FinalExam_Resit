@@ -268,7 +268,7 @@ fieldset {
 
 .drop-down {
 	background: transparent !important;
-	font-family: "demos-next" !important;
+	font-family: "hermes" !important;
 	text-transform: capitalize !important;
 	color: $primary_blue !important;
 	max-height: 1.5rem !important;
@@ -868,6 +868,7 @@ header .banner-text {
 	margin-right: 20px;
 	font-size: 1.25rem;
 	transition: 1s all;
+	font-family: "hermes" !important;
 	&:hover {
 		text-decoration: underline !important;
 	}
@@ -875,6 +876,7 @@ header .banner-text {
 
 .header ul a {
 	transition: 1s all;
+	font-family: "hermes" !important;
 	&:hover {
 		color: $active_green !important;
 		text-decoration: underline !important;
@@ -1035,6 +1037,10 @@ tfoot th {
 	main {
 		width: 92%;
 		margin: 0 auto !important;
+	}
+
+	.tab-btn {
+		font-size: 11px !important;
 	}
 }
 @media screen and (min-width: 768px) {
