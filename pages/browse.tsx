@@ -175,16 +175,19 @@ function browsePage({ gameArray }: { gameArray: Array<any> | null }) {
 												backgroundSize: `${"contain"}`,
 											}}></div>
 									)}
-									<h1 className='card-h1'>{item.title}</h1>
 									<div className='button-group__card'>
-										<CartButton
-											ID={parseInt(item.id)}
-											index={index}></CartButton>
+										<h1 className='card-h1'>{item.title}</h1>
 										<Link
 											key={item.name}
 											href={`/details/${parseInt(item.id)}`}>
 											<a className='link-button'> Details </a>
 										</Link>
+									</div>
+									<div className='button-group__card'>
+										<h3 className='card-price'>$ 20.99</h3>
+										<CartButton
+											ID={parseInt(item.id)}
+											index={index}></CartButton>
 									</div>
 								</Card>
 							</Grid>

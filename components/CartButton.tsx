@@ -24,10 +24,8 @@ export default function CartButton({
 	let cartNo: number | null = -1;
 
 	const clickHandler = (event: React.ChangeEvent<any>) => {
-		//event.target.classList.toggle("MyFilled");
+		event.target.classList.toggle("MyFilled");
 		//	console.log("innerHTM", typeof event.target.innerText);
-		console.log("event target", event.target.style.backgroundColor);
-		event.target.style.backgroundColor == "#fbf9be" ? "#bf2604" : "#fbf9be";
 		event.target.innerText == "ADD"
 			? (event.target.innerText = "REMOVE")
 			: (event.target.innerText = "ADD");
@@ -51,7 +49,7 @@ export default function CartButton({
 			<Button
 				key={index}
 				className={`${className} MyFilled`}
-				variant='outlined'
+				variant='contained'
 				startIcon={<ShoppingBasketOutlinedIcon fontSize='small' />}
 				onClick={(e) => (clickHandler(e), CartGames(ID))}>
 				Remove
@@ -61,7 +59,7 @@ export default function CartButton({
 		<Button
 			key={index}
 			className={`${className} MyEmpty`}
-			variant='outlined'
+			variant='contained'
 			startIcon={<ShoppingBasketIcon fontSize='small' />}
 			onClick={(e) => (clickHandler(e), CartGames(ID))}>
 			Add

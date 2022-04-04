@@ -12,6 +12,7 @@ import { InsertEmoticon, Pageview } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import CartGames from "../components/clickHandlers/cartGames";
 import BoxList from "../components/lists/BoxList";
+import Link from "next/link";
 
 function getKeyByValueCart(object: object | any, value: number) {
 	if (Object.keys(object).find((key) => object[key] === value)) {
@@ -41,7 +42,6 @@ function Cart({ gameArray }: { gameArray: Array<any> | any }) {
 			setNoGames(noOfGames);
 			setTotGames(TotalOfGames);
 			setNews(cartArray);
-			console.log("News", news);
 		}
 	}, [gameArray, renderCount]);
 
@@ -67,10 +67,20 @@ function Cart({ gameArray }: { gameArray: Array<any> | any }) {
 				color='#fbf9be'
 				content='Cart Page'></Heading>
 			<main>
-				<button
-					onClick={() => setRenderCount((prevState: number) => prevState + 1)}>
-					Load Games
-				</button>
+				<div className='flex-box__container-index'>
+					<div className='flex-box-index'>
+						<button
+							onClick={() =>
+								setRenderCount((prevState: number) => prevState + 1)
+							}>
+							Load Games
+						</button>
+						<Link href={`/checkout`}>
+							<a className='link-button-checkout'> Checkout </a>
+						</Link>
+					</div>
+				</div>
+
 				<div style={{ backgroundColor: "white", color: "black" }}>
 					<table>
 						<tr>
