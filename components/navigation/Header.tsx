@@ -95,7 +95,7 @@ const Header: any = () => {
 									// call logout
 									setUser(null), router.push("/");
 								}}>
-								{`${user} Logout`}
+								{`${user}`}
 							</Button>
 						</>
 					) : (
