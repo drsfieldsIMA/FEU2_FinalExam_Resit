@@ -98,7 +98,14 @@ const Header: any = () => {
 							</Button>
 						</>
 					) : (
-						<button>Login</button>
+						<button
+							className='items login-btn'
+							onClick={() =>
+								// call logout
+								router.push("/")
+							}>
+							Login
+						</button>
 					)}
 				</ul>
 			)}
