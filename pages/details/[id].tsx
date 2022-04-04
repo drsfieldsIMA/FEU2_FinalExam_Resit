@@ -82,7 +82,7 @@ export default function ProductPost({ game }: { game: Array<object> | any }) {
 										my: 3,
 									}}
 								/>
-								<Link href={`/category?${game.genre}`}>
+								<Link href={`/browse?${game.genre}`}>
 									<a className='category-link'>{game.genre}</a>
 								</Link>
 								<Divider
@@ -136,22 +136,24 @@ export async function getStaticProps({ params }: { params: object | any }) {
 	//	const data = await res.json();
 	//	const  game =  gameObject.filter(post => (post.Slug == slug));
 	let game = gameObj.filter((post) => post.id == 131237);
-
-	/* const response = await fetch(
-		`https://mmo-games.p.rapidapi.com/game?id=${id}`,
-		{
-			method: "GET",
-			headers: {
-				"x-rapidapi-host": "mmo-games.p.rapidapi.com",
-				"x-rapidapi-key": "3b1497acf6msh9bc671c8b1eadf4p1062afjsnea62995b5794",
-			},
-		}
-	);
-
-	if (response.status === 200) {
+	try {
+		const response = await fetch(
+			`https://mmo-games.p.rapidapi.com/game?id=${id}`,
+			{
+				method: "GET",
+				headers: {
+					"x-rapidapi-host": "mmo-games.p.rapidapi.com",
+					"x-rapidapi-key":
+						"3b1497acf6msh9bc671c8b1eadf4p1062afjsnea62995b5794",
+				},
+			}
+		);
 		console.log("response", response);
 		game = await response.json();
-	} */
+	} catch (err) {
+		console.log(err);
+		game = game;
+	}
 
 	//	console.log("game asset", asset);
 	return {
