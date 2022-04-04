@@ -42,8 +42,8 @@ interface IMyValue {
 }
 
 const schema = yup.object().shape({
-	username: yup.string(),
-	password: yup.string(),
+	username: yup.string().required("user name is required"),
+	password: yup.string().required("password is required"),
 });
 
 function HomeForm(props: IMyValue) {
@@ -238,7 +238,7 @@ function HomeForm(props: IMyValue) {
 						}}>
 						{"Previous"}
 					</button>
-					<Button
+					<button
 						className={
 							page !== 0
 								? " heading-block active-h1"
@@ -248,8 +248,8 @@ function HomeForm(props: IMyValue) {
 							setPage(0);
 						}}>
 						{FormTitles[0]}
-					</Button>
-					<Button
+					</button>
+					<button
 						className={
 							page !== 1
 								? " heading-block active-h1"
@@ -259,8 +259,8 @@ function HomeForm(props: IMyValue) {
 							setPage(1);
 						}}>
 						{FormTitles[1]}
-					</Button>
-					<Button
+					</button>
+					<button
 						className={
 							page !== 2
 								? " heading-block active-h1"
@@ -270,7 +270,7 @@ function HomeForm(props: IMyValue) {
 							setPage(2);
 						}}>
 						{FormTitles[2]}
-					</Button>
+					</button>
 					<button
 						className={page === 2 ? "tab-button disabled" : "tab-button"}
 						onClick={() => {

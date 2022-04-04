@@ -134,7 +134,7 @@ export async function getStaticProps({ params }: { params: object | any }) {
 	let idInt = parseInt(id);
 	//const res = await fetch(`http://localhost:1337/games?Slug=${slug}`);
 	//	const data = await res.json();
-	//	const  game =  gameArr.filter(post => (post.Slug == slug));
+	//	const  game =  gameObject.filter(post => (post.Slug == slug));
 	const response = await fetch(
 		`https://mmo-games.p.rapidapi.com/game?id=${id}`,
 		{
@@ -145,7 +145,12 @@ export async function getStaticProps({ params }: { params: object | any }) {
 			},
 		}
 	);
-	const game = await response.json();
+	if (response.status === 200) {
+		let game = await response.json();
+	} else {
+		let game = gameObj.filter((post) => post.id == 131237);
+	}
+
 	//	console.log("game asset", asset);
 	return {
 		props: { game },
